@@ -71,8 +71,16 @@ const initVideos = () => {
   let wallIndex = 0;
 
   document.querySelectorAll("video").forEach((video, index) => {
+    if (!video.closest(".observatory")) {
+      video.removeAttribute("src");
+      delete video.dataset.src;
+      video.load();
+      video.style.display = "none";
+      return;
+    }
+
     const tile = video.closest(".feed-tile");
-    const useLandingVideo = tile?.classList.contains("focus-source") || video.hasAttribute("data-feature-video");
+    const useLandingVideo = tile?.classList.contains("focus-source");
     const source = useLandingVideo
       ? randomizedLandingSources[landingIndex++ % randomizedLandingSources.length]
       : randomizedWallSources[wallIndex++ % randomizedWallSources.length];

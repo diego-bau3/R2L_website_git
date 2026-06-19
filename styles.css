@@ -228,6 +228,12 @@ body.robot-view .dataset-tile::after {
   background: #050506;
 }
 
+.zoom-journey .feed-tile video,
+.methods .feed-tile video,
+.dataset .feed-tile video {
+  display: none;
+}
+
 .feed-fallback {
   background:
     radial-gradient(circle at 20% 20%, rgba(255,81,0,0.9), transparent 18%),
