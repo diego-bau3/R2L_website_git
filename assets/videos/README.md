@@ -22,7 +22,6 @@ Current mapping:
 - `wall/wall-02.mp4` from `Wall/BIMOE1518.MOV`
 - `wall/wall-03.mp4` from `Wall/HFFW4800.MP4`
 - `wall/wall-04.mp4` from `Wall/LDMUE7906.MOV`
-- `wall/wall-05.mp4` from `Wall/LRZME6299.MOV`
 - `wall/wall-06.mp4` from `Wall/MIUT6462.MP4`
 - `wall/wall-07.mp4` from `Wall/NMUL0354.MP4`
 - `wall/wall-08.mp4` from `Wall/ONDME9789.MOV`

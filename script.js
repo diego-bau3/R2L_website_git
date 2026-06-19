@@ -9,7 +9,6 @@ const videoLibrary = {
     "assets/videos/wall/wall-02.mp4",
     "assets/videos/wall/wall-03.mp4",
     "assets/videos/wall/wall-04.mp4",
-    "assets/videos/wall/wall-05.mp4",
     "assets/videos/wall/wall-06.mp4",
     "assets/videos/wall/wall-07.mp4",
     "assets/videos/wall/wall-08.mp4",
