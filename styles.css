@@ -1241,9 +1241,9 @@ body.robot-view .dataset-tile video {
 
 .landing-frame::before {
   background:
-    repeating-linear-gradient(0deg, rgba(250, 250, 250, 0.055) 0 1px, transparent 1px 7px),
-    repeating-linear-gradient(90deg, rgba(255, 81, 0, 0.035) 0 1px, transparent 1px 420px);
-  opacity: 0.36;
+    repeating-linear-gradient(0deg, rgba(250, 250, 250, 0.035) 0 1px, transparent 1px 8px),
+    repeating-linear-gradient(90deg, rgba(255, 81, 0, 0.02) 0 1px, transparent 1px 460px);
+  opacity: 0.22;
   mix-blend-mode: screen;
 }
 
@@ -1254,15 +1254,15 @@ body.robot-view .dataset-tile video {
     linear-gradient(90deg, transparent 0 71%, rgba(250, 250, 250, 0.1) 74%, transparent 86%);
   height: 42%;
   top: 43%;
-  opacity: 0.16;
+  opacity: 0.08;
   transform: skewY(-0.8deg);
 }
 
 .landing-corner {
   position: absolute;
-  width: clamp(66px, 8vw, 132px);
-  height: clamp(48px, 6vw, 96px);
-  border-color: rgba(250, 250, 250, 0.92);
+  width: clamp(42px, 5vw, 82px);
+  height: clamp(32px, 4vw, 62px);
+  border-color: rgba(250, 250, 250, 0.66);
   border-style: solid;
   z-index: 4;
 }
@@ -1300,18 +1300,19 @@ body.robot-view .dataset-tile video {
   font-family: var(--mono);
   color: var(--white);
   text-transform: uppercase;
-  text-shadow: 0 0 14px rgba(250, 250, 250, 0.18);
+  text-shadow: 0 0 10px rgba(250, 250, 250, 0.12);
 }
 
 .landing-play {
-  top: clamp(58px, 6vw, 92px);
-  left: clamp(52px, 6.5vw, 98px);
+  top: clamp(34px, 4vw, 56px);
+  left: clamp(34px, 4.2vw, 60px);
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  font-size: clamp(20px, 3.1vw, 44px);
-  font-weight: 700;
+  gap: 6px;
+  font-size: clamp(11px, 1vw, 15px);
+  font-weight: 500;
   letter-spacing: 0;
+  color: rgba(250, 250, 250, 0.56);
 }
 
 .landing-play i {
@@ -1324,45 +1325,45 @@ body.robot-view .dataset-tile video {
 }
 
 .landing-signal {
-  top: clamp(26px, 3vw, 42px);
+  top: clamp(22px, 2.4vw, 34px);
   left: 50%;
   transform: translateX(-50%);
-  font-size: clamp(9px, 0.9vw, 12px);
+  font-size: clamp(7px, 0.7vw, 10px);
   font-weight: 700;
-  letter-spacing: 0.22em;
-  color: rgba(250, 250, 250, 0.38);
+  letter-spacing: 0.18em;
+  color: rgba(250, 250, 250, 0.24);
 }
 
 .landing-time-stack {
-  left: clamp(52px, 6.5vw, 98px);
-  bottom: clamp(42px, 5vw, 72px);
+  left: clamp(34px, 4.2vw, 60px);
+  bottom: clamp(32px, 3.6vw, 48px);
   display: grid;
   gap: 2px;
-  font-size: clamp(18px, 2.7vw, 39px);
-  font-weight: 700;
-  line-height: 0.95;
-  color: rgba(250, 250, 250, 0.92);
+  font-size: clamp(10px, 0.95vw, 14px);
+  font-weight: 500;
+  line-height: 1.05;
+  color: rgba(250, 250, 250, 0.5);
 }
 
 .landing-timecode {
-  right: clamp(52px, 6.5vw, 98px);
-  bottom: clamp(50px, 5.2vw, 78px);
-  font-size: clamp(17px, 2.1vw, 32px);
-  font-weight: 700;
+  right: clamp(34px, 4.2vw, 60px);
+  bottom: clamp(34px, 3.8vw, 52px);
+  font-size: clamp(10px, 0.9vw, 14px);
+  font-weight: 500;
   line-height: 1;
-  color: rgba(250, 250, 250, 0.86);
+  color: rgba(250, 250, 250, 0.48);
 }
 
 .landing-glitch {
   position: absolute;
   z-index: 3;
-  height: 2px;
-  background: rgba(250, 250, 250, 0.42);
+  height: 1px;
+  background: rgba(250, 250, 250, 0.22);
   box-shadow:
-    22px 0 rgba(250, 250, 250, 0.2),
-    84px 0 rgba(250, 250, 250, 0.16),
-    -38px 0 rgba(250, 250, 250, 0.14);
-  opacity: 0.26;
+    22px 0 rgba(250, 250, 250, 0.1),
+    84px 0 rgba(250, 250, 250, 0.08),
+    -38px 0 rgba(250, 250, 250, 0.07);
+  opacity: 0.13;
 }
 
 .landing-wordmark {
@@ -1387,22 +1388,22 @@ body.robot-view .dataset-tile video {
   right: 10%;
   top: 21%;
   width: 24%;
-  opacity: 0.18;
+  opacity: 0.08;
 }
 
 .glitch-c {
   left: 29%;
   bottom: 19%;
   width: 34%;
-  height: 3px;
-  opacity: 0.22;
+  height: 1px;
+  opacity: 0.1;
 }
 
 .glitch-d {
   right: 8%;
   bottom: 15%;
   width: 17%;
-  opacity: 0.2;
+  opacity: 0.09;
 }
 
 .observatory-status span {

@@ -1,25 +1,22 @@
-const videoSources = [
-  "https://raw.githubusercontent.com/sanneschermer-arch/R2L_website/codex/add-videosfinalex/videosfinalex/x_20260514_202251.mp4",
-  "https://raw.githubusercontent.com/sanneschermer-arch/R2L_website/codex/add-videosfinalex/videosfinalex/x_20260514_202811.mp4",
-  "https://raw.githubusercontent.com/sanneschermer-arch/R2L_website/codex/add-videosfinalex/videosfinalex/x_20260514_225803.mp4",
-  "https://raw.githubusercontent.com/sanneschermer-arch/R2L_website/codex/add-videosfinalex/videosfinalex/x_20260514_230009.mp4",
-  "https://raw.githubusercontent.com/sanneschermer-arch/R2L_website/codex/add-videosfinalex/videosfinalex/x_20260517_232317.mp4",
-  "https://raw.githubusercontent.com/sanneschermer-arch/R2L_website/codex/add-videosfinalex/videosfinalex/x_20260517_232433.mp4",
-  "https://raw.githubusercontent.com/sanneschermer-arch/R2L_website/codex/add-videosfinalex/videosfinalex/x_20260517_232828.mp4",
-  "https://raw.githubusercontent.com/sanneschermer-arch/R2L_website/codex/add-videosfinalex/videosfinalex/x_20260517_234012.mp4",
-  "https://raw.githubusercontent.com/sanneschermer-arch/R2L_website/codex/add-videosfinalex/videosfinalex/x_20260617_142331.mp4",
-  "https://raw.githubusercontent.com/sanneschermer-arch/R2L_website/codex/add-videosfinalex/videosfinalex/x_20260617_144418.mp4",
-  "https://raw.githubusercontent.com/sanneschermer-arch/R2L_website/codex/add-videosfinalex/videosfinalex/x_20260617_144717.mp4",
-  "https://raw.githubusercontent.com/sanneschermer-arch/R2L_website/codex/add-videosfinalex/videosfinalex/x_20260617_145317.mp4",
-  "https://raw.githubusercontent.com/sanneschermer-arch/R2L_website/codex/add-videosfinalex/videosfinalex/x_20260617_145603.mp4",
-  "https://raw.githubusercontent.com/sanneschermer-arch/R2L_website/codex/add-videosfinalex/videosfinalex/x_20260617_164847.mp4",
-  "https://raw.githubusercontent.com/sanneschermer-arch/R2L_website/codex/add-videosfinalex/videosfinalex/x_20260617_204852.mp4",
-  "https://raw.githubusercontent.com/sanneschermer-arch/R2L_website/codex/add-videosfinalex/videosfinalex/x_20260617_212645.mp4",
-  "https://raw.githubusercontent.com/sanneschermer-arch/R2L_website/codex/add-videosfinalex/videosfinalex/x_20260617_220044.mp4",
-  "https://raw.githubusercontent.com/sanneschermer-arch/R2L_website/codex/add-videosfinalex/videosfinalex/x_20260617_220620.mp4",
-  "https://raw.githubusercontent.com/sanneschermer-arch/R2L_website/codex/add-videosfinalex/videosfinalex/x_20260617_220925.mp4",
-  "https://raw.githubusercontent.com/sanneschermer-arch/R2L_website/codex/add-videosfinalex/videosfinalex/x_20260617_221300.mp4"
-];
+const videoLibrary = {
+  landing: [
+    "assets/videos/landing/landing-01.mp4"
+  ],
+  wall: [
+    "assets/videos/wall/wall-01.mp4",
+    "assets/videos/wall/wall-02.mp4",
+    "assets/videos/wall/wall-03.mp4",
+    "assets/videos/wall/wall-04.mp4",
+    "assets/videos/wall/wall-05.mp4",
+    "assets/videos/wall/wall-06.mp4",
+    "assets/videos/wall/wall-07.mp4",
+    "assets/videos/wall/wall-08.mp4",
+    "assets/videos/wall/wall-09.mp4",
+    "assets/videos/wall/wall-10.mp4",
+    "assets/videos/wall/wall-11.mp4",
+    "assets/videos/wall/wall-12.mp4"
+  ]
+};
 
 const shuffle = (items) => {
   const copy = [...items];
@@ -67,11 +64,18 @@ const methodCopy = {
 };
 
 const initVideos = () => {
-  const randomizedSources = shuffle(videoSources);
+  const randomizedLandingSources = shuffle(videoLibrary.landing);
+  const randomizedWallSources = shuffle(videoLibrary.wall);
   const deferredVideos = [];
+  let landingIndex = 0;
+  let wallIndex = 0;
 
   document.querySelectorAll("video").forEach((video, index) => {
-    const source = randomizedSources[index % randomizedSources.length];
+    const tile = video.closest(".feed-tile");
+    const useLandingVideo = tile?.classList.contains("focus-source") || video.hasAttribute("data-feature-video");
+    const source = useLandingVideo
+      ? randomizedLandingSources[landingIndex++ % randomizedLandingSources.length]
+      : randomizedWallSources[wallIndex++ % randomizedWallSources.length];
     const shouldLoadNow = video.closest(".feed-tile")?.classList.contains("focus-source");
 
     if (shouldLoadNow) {
