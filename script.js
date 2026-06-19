@@ -3,8 +3,9 @@ const videoLibrary = {
     "assets/videos/landing/landing-01.mp4"
   ],
   // Wall positions map to the data-wall-slot attributes in index.html.
-  // There are 12 video slots in the wall; wall-12.mp4 is kept as a spare.
+  // The last item is kept as a spare because one grid cell is reserved for the logo tile.
   wall: [
+    "assets/videos/wall/wall-12.mp4",
     "assets/videos/wall/wall-01.mp4",
     "assets/videos/wall/wall-02.mp4",
     "assets/videos/wall/wall-03.mp4",
@@ -15,8 +16,7 @@ const videoLibrary = {
     "assets/videos/wall/wall-09.mp4",
     "assets/videos/wall/wall-10.mp4",
     "assets/videos/wall/wall-11.mp4",
-    "assets/videos/wall/wall-13.mp4",
-    "assets/videos/wall/wall-12.mp4"
+    "assets/videos/wall/wall-13.mp4"
   ]
 };
 
@@ -72,7 +72,7 @@ const initVideos = () => {
   let focusMode = "landing";
 
   document.querySelectorAll("video").forEach((video, index) => {
-    if (!video.closest(".observatory")) {
+    if (!video.closest(".observatory") || video.closest(".hidden-slot")) {
       video.removeAttribute("src");
       delete video.dataset.src;
       video.load();
