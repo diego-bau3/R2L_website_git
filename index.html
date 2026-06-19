@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=landing-wall-videos-only">
+    <link rel="stylesheet" href="styles.css?v=fixed-wall-slots">
   </head>
   <body>
     <div class="cursor-light" aria-hidden="true"></div>
@@ -32,7 +32,7 @@
       <section class="hero observatory section-dark" aria-labelledby="hero-title">
         <h1 id="hero-title" class="visually-hidden">R2L live data observatory</h1>
         <div class="observatory-grid" data-feed-wall>
-          <article class="feed-tile obs-tile large" data-feed data-mode="leader">
+          <article class="feed-tile obs-tile large" data-feed data-wall-slot="1" data-mode="leader">
             <video muted autoplay loop playsinline preload="metadata"></video>
             <div class="feed-fallback"></div>
             <div class="feed-hud"><span><i></i>LIVE</span><span>12:04:18</span></div>
@@ -40,12 +40,12 @@
             <div class="feed-overlay"><span>ARM 01</span><span>LEADER</span></div>
           </article>
           <article class="feed-tile obs-tile logo-tile is-glitching">
-            <div class="pixel-logo"><img src="assets/logos/name-r2l-cropped.png" alt="R2L"></div>
+            <div class="pixel-logo mark-logo"><img src="assets/r2l-mark-white.png" alt="R2L"></div>
             <div class="feed-hud"><span><i></i>SIGNAL</span><span>R2L</span></div>
             <div class="feed-frame"></div>
             <div class="feed-overlay"><span>BOOT</span><span>DATA OBSERVATORY</span></div>
           </article>
-          <article class="feed-tile obs-tile noisy" data-feed data-mode="ego">
+          <article class="feed-tile obs-tile noisy" data-feed data-wall-slot="2" data-mode="ego">
             <video muted autoplay loop playsinline preload="metadata"></video>
             <div class="feed-fallback"></div>
             <div class="static-noise"></div>
@@ -53,28 +53,28 @@
             <div class="feed-frame"></div>
             <div class="feed-overlay"><span>POV 03</span><span>EGOCENTRIC</span></div>
           </article>
-          <article class="feed-tile obs-tile wide" data-feed data-mode="remote">
+          <article class="feed-tile obs-tile wide" data-feed data-wall-slot="3" data-mode="remote">
             <video muted autoplay loop playsinline preload="metadata"></video>
             <div class="feed-fallback"></div>
             <div class="feed-hud"><span><i></i>LIVE</span><span>12:04:25</span></div>
             <div class="feed-frame"></div>
             <div class="feed-overlay"><span>CTRL 08</span><span>REMOTE ARM</span></div>
           </article>
-          <article class="feed-tile obs-tile" data-feed data-mode="leader">
+          <article class="feed-tile obs-tile" data-feed data-wall-slot="4" data-mode="leader">
             <video muted autoplay loop playsinline preload="metadata"></video>
             <div class="feed-fallback"></div>
             <div class="feed-hud"><span><i></i>REC</span><span>12:04:30</span></div>
             <div class="feed-frame"></div>
             <div class="feed-overlay"><span>TASK 12</span><span>GRASP</span></div>
           </article>
-          <article class="feed-tile obs-tile tall" data-feed data-mode="ego">
+          <article class="feed-tile obs-tile tall" data-feed data-wall-slot="5" data-mode="ego">
             <video muted autoplay loop playsinline preload="metadata"></video>
             <div class="feed-fallback"></div>
             <div class="feed-hud"><span><i></i>LIVE</span><span>12:04:31</span></div>
             <div class="feed-frame"></div>
             <div class="feed-overlay"><span>PATH 04</span><span>HUMAN POV</span></div>
           </article>
-          <article class="feed-tile obs-tile noisy" data-feed data-mode="remote">
+          <article class="feed-tile obs-tile noisy" data-feed data-wall-slot="6" data-mode="remote">
             <video muted autoplay loop playsinline preload="metadata"></video>
             <div class="feed-fallback"></div>
             <div class="static-noise"></div>
@@ -82,14 +82,14 @@
             <div class="feed-frame"></div>
             <div class="feed-overlay"><span>QA 94%</span><span>TELEOP</span></div>
           </article>
-          <article class="feed-tile obs-tile" data-feed data-mode="leader">
+          <article class="feed-tile obs-tile" data-feed data-wall-slot="7" data-mode="leader">
             <video muted autoplay loop playsinline preload="metadata"></video>
             <div class="feed-fallback"></div>
             <div class="feed-hud"><span><i></i>LIVE</span><span>12:04:36</span></div>
             <div class="feed-frame"></div>
             <div class="feed-overlay"><span>SYNC 03</span><span>FOLLOWER</span></div>
           </article>
-          <article class="feed-tile obs-tile wide focus-source" data-feed data-mode="leader">
+          <article class="feed-tile obs-tile wide focus-source" data-feed data-wall-slot="8" data-mode="leader">
             <video muted autoplay loop playsinline preload="metadata"></video>
             <div class="feed-fallback"></div>
             <div class="feed-hud"><span><i></i>LOCKED</span><span>12:04:39</span></div>
@@ -108,28 +108,28 @@
             </div>
             <div class="feed-overlay"><span>FEED 17</span><span>SELECTED</span></div>
           </article>
-          <article class="feed-tile obs-tile" data-feed data-mode="ego">
+          <article class="feed-tile obs-tile" data-feed data-wall-slot="9" data-mode="ego">
             <video muted autoplay loop playsinline preload="metadata"></video>
             <div class="feed-fallback"></div>
             <div class="feed-hud"><span><i></i>REC</span><span>12:04:42</span></div>
             <div class="feed-frame"></div>
             <div class="feed-overlay"><span>HANDS 06</span><span>OBJECT USE</span></div>
           </article>
-          <article class="feed-tile obs-tile" data-feed data-mode="remote">
+          <article class="feed-tile obs-tile" data-feed data-wall-slot="10" data-mode="remote">
             <video muted autoplay loop playsinline preload="metadata"></video>
             <div class="feed-fallback"></div>
             <div class="feed-hud"><span><i></i>LIVE</span><span>12:04:44</span></div>
             <div class="feed-frame"></div>
             <div class="feed-overlay"><span>EDGE 11</span><span>RECOVERY</span></div>
           </article>
-          <article class="feed-tile obs-tile" data-feed data-mode="ego">
+          <article class="feed-tile obs-tile" data-feed data-wall-slot="11" data-mode="ego">
             <video muted autoplay loop playsinline preload="metadata"></video>
             <div class="feed-fallback"></div>
             <div class="feed-hud"><span><i></i>REC</span><span>12:04:48</span></div>
             <div class="feed-frame"></div>
             <div class="feed-overlay"><span>SCENE 22</span><span>ROOM VIEW</span></div>
           </article>
-          <article class="feed-tile obs-tile bottom-fill" data-feed data-mode="remote">
+          <article class="feed-tile obs-tile bottom-fill" data-feed data-wall-slot="12" data-mode="remote">
             <video muted autoplay loop playsinline preload="metadata"></video>
             <div class="feed-fallback"></div>
             <div class="feed-hud"><span><i></i>LIVE</span><span>12:04:51</span></div>
@@ -386,7 +386,7 @@
       </section>
     </main>
 
-    <script src="script.js?v=landing-wall-videos-only"></script>
+    <script src="script.js?v=fixed-wall-slots"></script>
   </body>
 </html>
 

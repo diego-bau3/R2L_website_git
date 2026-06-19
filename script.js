@@ -2,6 +2,8 @@ const videoLibrary = {
   landing: [
     "assets/videos/landing/landing-01.mp4"
   ],
+  // Wall positions map to the data-wall-slot attributes in index.html.
+  // There are 12 video slots in the wall; wall-12.mp4 is kept as a spare.
   wall: [
     "assets/videos/wall/wall-01.mp4",
     "assets/videos/wall/wall-02.mp4",
@@ -14,8 +16,8 @@ const videoLibrary = {
     "assets/videos/wall/wall-09.mp4",
     "assets/videos/wall/wall-10.mp4",
     "assets/videos/wall/wall-11.mp4",
-    "assets/videos/wall/wall-12.mp4",
-    "assets/videos/wall/wall-13.mp4"
+    "assets/videos/wall/wall-13.mp4",
+    "assets/videos/wall/wall-12.mp4"
   ]
 };
 
@@ -65,11 +67,10 @@ const methodCopy = {
 };
 
 const initVideos = () => {
-  const randomizedLandingSources = shuffle(videoLibrary.landing);
-  const randomizedWallSources = shuffle(videoLibrary.wall);
+  const landingSource = videoLibrary.landing[0];
   const deferredVideos = [];
-  let landingIndex = 0;
-  let wallIndex = 0;
+  let focusVideo = null;
+  let focusMode = "landing";
 
   document.querySelectorAll("video").forEach((video, index) => {
     if (!video.closest(".observatory")) {
@@ -81,11 +82,17 @@ const initVideos = () => {
     }
 
     const tile = video.closest(".feed-tile");
-    const useLandingVideo = tile?.classList.contains("focus-source");
-    const source = useLandingVideo
-      ? randomizedLandingSources[landingIndex++ % randomizedLandingSources.length]
-      : randomizedWallSources[wallIndex++ % randomizedWallSources.length];
+    const slotIndex = Number(tile?.dataset.wallSlot || 1) - 1;
+    const wallSource = videoLibrary.wall[slotIndex % videoLibrary.wall.length];
+    const isFocusVideo = tile?.classList.contains("focus-source");
+    const source = isFocusVideo ? landingSource : wallSource;
     const shouldLoadNow = video.closest(".feed-tile")?.classList.contains("focus-source");
+
+    if (isFocusVideo) {
+      focusVideo = video;
+      video.dataset.landingSrc = landingSource;
+      video.dataset.wallSrc = wallSource;
+    }
 
     if (shouldLoadNow) {
       video.src = source;
@@ -112,6 +119,16 @@ const initVideos = () => {
     });
   });
 
+  window.r2lSetFocusWallMode = (isWallMode) => {
+    if (!focusVideo) return;
+    const nextMode = isWallMode ? "wall" : "landing";
+    if (nextMode === focusMode) return;
+    focusMode = nextMode;
+    focusVideo.src = isWallMode ? focusVideo.dataset.wallSrc : focusVideo.dataset.landingSrc;
+    focusVideo.load();
+    focusVideo.play().catch(() => {});
+  };
+
   window.r2lLoadDeferredVideos = () => {
     deferredVideos.forEach((video) => {
       if (!video.src && video.dataset.src) {
@@ -122,36 +139,6 @@ const initVideos = () => {
     });
     deferredVideos.length = 0;
   };
-};
-
-const initSignalLostTiles = () => {
-  const preferredTile = document.querySelector(".observatory .obs-tile:nth-child(4)");
-  const excludedRandomTiles = [
-    ".observatory .obs-tile:nth-child(1)",
-    ".observatory .obs-tile:nth-child(5)",
-    ".observatory .obs-tile:nth-child(10)"
-  ].map((selector) => document.querySelector(selector));
-  const candidates = [...document.querySelectorAll(".observatory .obs-tile[data-feed]")]
-    .filter((tile) => !tile.classList.contains("focus-source") && tile !== preferredTile && !excludedRandomTiles.includes(tile));
-  const selectedTiles = [preferredTile, ...shuffle(candidates).slice(0, 1)].filter(Boolean);
-
-  selectedTiles.forEach((tile, index) => {
-    tile.classList.add("signal-lost");
-    const hudStatus = tile.querySelector(".feed-hud span:first-child");
-    const hudTime = tile.querySelector(".feed-hud span:last-child");
-    const overlay = tile.querySelector(".feed-overlay");
-    const video = tile.querySelector("video");
-
-    if (hudStatus) hudStatus.innerHTML = "<i></i>OFFLINE";
-    if (hudTime) hudTime.textContent = index === 0 ? "00:00:00" : "--:--:--";
-    if (overlay) overlay.innerHTML = "<span>SIGNAL LOST</span><span>RETRYING</span>";
-    if (video) {
-      video.pause();
-      video.removeAttribute("src");
-      delete video.dataset.src;
-      video.load();
-    }
-  });
 };
 
 const initCursorLight = () => {
@@ -273,6 +260,9 @@ const initScrollJourney = () => {
       if (targetWallZoomProgress > 0.04 && window.r2lLoadDeferredVideos) {
         window.r2lLoadDeferredVideos();
       }
+      if (window.r2lSetFocusWallMode) {
+        window.r2lSetFocusWallMode(targetWallZoomProgress > 0.48);
+      }
     }
 
     if (zoomJourney) {
@@ -308,7 +298,6 @@ const initScrollJourney = () => {
 };
 
 initVideos();
-initSignalLostTiles();
 initCursorLight();
 initReveal();
 initMethodTabs();
