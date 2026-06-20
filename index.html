@@ -3,390 +3,48 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="R2L captures real-world video data for humanoids and robotics teams.">
-    <title>R2L | Real-world video data for robotics</title>
+    <meta name="description" content="R2L captures real-world video data for humanoids and robots.">
+    <title>R2L | Real-world robot data</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=clean-wall-no-orange-hover">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=static-method-cards">
   </head>
   <body>
-    <div class="cursor-light" aria-hidden="true"></div>
-    <div class="scanline" aria-hidden="true"></div>
+    <main>
+      <section class="hero" aria-label="R2L">
+        <video class="hero-video" src="assets/videos/landing/landing-01.mp4" muted autoplay loop playsinline preload="metadata"></video>
+        <img class="hero-logo" src="assets/r2l-wordmark-white.png" alt="R2L">
+      </section>
 
-    <header class="site-header" data-reveal>
-      <a class="brand" href="#top" aria-label="R2L home">
-        <img src="assets/logos/name-r2l-cropped.png" alt="" class="brand-mark">
-        <span>R2L</span>
-      </a>
-      <nav aria-label="Primary navigation">
-        <a href="#methods">Methods</a>
-        <a href="#dataset">Dataset Wall</a>
-        <a href="#pipeline">Pipeline</a>
-        <a href="#contact">Contact</a>
-      </nav>
-      <a class="header-cta" href="#contact">Start capture</a>
-    </header>
-
-    <main id="top">
-      <section class="hero observatory section-dark" aria-labelledby="hero-title">
-        <h1 id="hero-title" class="visually-hidden">R2L live data observatory</h1>
-        <div class="observatory-grid" data-feed-wall>
-          <article class="feed-tile obs-tile large" data-feed data-wall-slot="1" data-mode="leader">
-            <video muted autoplay loop playsinline preload="metadata"></video>
-            <div class="feed-fallback"></div>
-            <div class="feed-hud"><span><i></i>LIVE</span><span>12:04:18</span></div>
-            <div class="feed-frame"></div>
-            <div class="feed-overlay"><span>ARM 01</span><span>LEADER</span></div>
-          </article>
-          <article class="feed-tile obs-tile logo-tile is-glitching">
-            <div class="pixel-logo mark-logo"><img src="assets/r2l-mark-white.png" alt="R2L"></div>
-            <div class="feed-hud"><span><i></i>SIGNAL</span><span>R2L</span></div>
-            <div class="feed-frame"></div>
-            <div class="feed-overlay"><span>BOOT</span><span>DATA OBSERVATORY</span></div>
-          </article>
-          <article class="feed-tile obs-tile noisy" data-feed data-wall-slot="2" data-mode="ego">
-            <video muted autoplay loop playsinline preload="metadata"></video>
-            <div class="feed-fallback"></div>
-            <div class="static-noise"></div>
-            <div class="feed-hud"><span><i></i>REC</span><span>12:04:22</span></div>
-            <div class="feed-frame"></div>
-            <div class="feed-overlay"><span>POV 03</span><span>EGOCENTRIC</span></div>
-          </article>
-          <article class="feed-tile obs-tile wide" data-feed data-wall-slot="3" data-mode="remote">
-            <video muted autoplay loop playsinline preload="metadata"></video>
-            <div class="feed-fallback"></div>
-            <div class="feed-hud"><span><i></i>LIVE</span><span>12:04:25</span></div>
-            <div class="feed-frame"></div>
-            <div class="feed-overlay"><span>CTRL 08</span><span>REMOTE ARM</span></div>
-          </article>
-          <article class="feed-tile obs-tile" data-feed data-wall-slot="4" data-mode="leader">
-            <video muted autoplay loop playsinline preload="metadata"></video>
-            <div class="feed-fallback"></div>
-            <div class="feed-hud"><span><i></i>REC</span><span>12:04:30</span></div>
-            <div class="feed-frame"></div>
-            <div class="feed-overlay"><span>TASK 12</span><span>GRASP</span></div>
-          </article>
-          <article class="feed-tile obs-tile tall" data-feed data-wall-slot="5" data-mode="ego">
-            <video muted autoplay loop playsinline preload="metadata"></video>
-            <div class="feed-fallback"></div>
-            <div class="feed-hud"><span><i></i>LIVE</span><span>12:04:31</span></div>
-            <div class="feed-frame"></div>
-            <div class="feed-overlay"><span>PATH 04</span><span>HUMAN POV</span></div>
-          </article>
-          <article class="feed-tile obs-tile noisy" data-feed data-wall-slot="6" data-mode="remote">
-            <video muted autoplay loop playsinline preload="metadata"></video>
-            <div class="feed-fallback"></div>
-            <div class="static-noise"></div>
-            <div class="feed-hud"><span><i></i>REC</span><span>12:04:33</span></div>
-            <div class="feed-frame"></div>
-            <div class="feed-overlay"><span>QA 94%</span><span>TELEOP</span></div>
-          </article>
-          <article class="feed-tile obs-tile" data-feed data-wall-slot="7" data-mode="leader">
-            <video muted autoplay loop playsinline preload="metadata"></video>
-            <div class="feed-fallback"></div>
-            <div class="feed-hud"><span><i></i>LIVE</span><span>12:04:36</span></div>
-            <div class="feed-frame"></div>
-            <div class="feed-overlay"><span>SYNC 03</span><span>FOLLOWER</span></div>
-          </article>
-          <article class="feed-tile obs-tile wide focus-source" data-feed data-wall-slot="8" data-mode="leader">
-            <video muted autoplay loop playsinline preload="metadata"></video>
-            <div class="feed-fallback"></div>
-            <div class="feed-hud"><span><i></i>LOCKED</span><span>12:04:39</span></div>
-            <div class="feed-frame"></div>
-            <div class="target-lock" aria-hidden="true">
-              <span class="target-corner corner-tl"></span>
-              <span class="target-corner corner-tr"></span>
-              <span class="target-corner corner-bl"></span>
-              <span class="target-corner corner-br"></span>
-              <span class="target-cross horizontal"></span>
-              <span class="target-cross vertical"></span>
-              <span class="target-core"></span>
-              <span class="target-readout readout-top">LOCK 17 // TRACKING</span>
-              <span class="target-readout readout-left">X: 04.688560<br>Y: 09.270598<br>SYNC: TRUE</span>
-              <span class="target-readout readout-bottom">R2L-OBS-17</span>
-            </div>
-            <div class="feed-overlay"><span>FEED 17</span><span>SELECTED</span></div>
-          </article>
-          <article class="feed-tile obs-tile hidden-slot" aria-hidden="true">
-            <video muted autoplay loop playsinline preload="metadata"></video>
-            <div class="feed-fallback"></div>
-            <div class="feed-hud"><span><i></i>REC</span><span>12:04:42</span></div>
-            <div class="feed-frame"></div>
-            <div class="feed-overlay"><span>HANDS 06</span><span>OBJECT USE</span></div>
-          </article>
-          <article class="feed-tile obs-tile" data-feed data-wall-slot="9" data-mode="remote">
-            <video muted autoplay loop playsinline preload="metadata"></video>
-            <div class="feed-fallback"></div>
-            <div class="feed-hud"><span><i></i>LIVE</span><span>12:04:44</span></div>
-            <div class="feed-frame"></div>
-            <div class="feed-overlay"><span>EDGE 11</span><span>RECOVERY</span></div>
-          </article>
-          <article class="feed-tile obs-tile" data-feed data-wall-slot="10" data-mode="ego">
-            <video muted autoplay loop playsinline preload="metadata"></video>
-            <div class="feed-fallback"></div>
-            <div class="feed-hud"><span><i></i>REC</span><span>12:04:48</span></div>
-            <div class="feed-frame"></div>
-            <div class="feed-overlay"><span>SCENE 22</span><span>ROOM VIEW</span></div>
-          </article>
-          <article class="feed-tile obs-tile bottom-fill" data-feed data-wall-slot="11" data-mode="remote">
-            <video muted autoplay loop playsinline preload="metadata"></video>
-            <div class="feed-fallback"></div>
-            <div class="feed-hud"><span><i></i>LIVE</span><span>12:04:51</span></div>
-            <div class="feed-frame"></div>
-            <div class="feed-overlay"><span>FEED 24</span><span>CONTROL VIEW</span></div>
-          </article>
-          <article class="feed-tile obs-tile wordmark-tile is-glitching">
-            <div class="wordmark-logo"><img src="assets/logos/name-r2l-cropped.png" alt="R2L"></div>
-            <div class="feed-hud"><span><i></i>ID</span><span>R2L</span></div>
-            <div class="feed-frame"></div>
-            <div class="feed-overlay"><span>ROBOTERIA</span><span>BRAND SIGNAL</span></div>
-          </article>
-        </div>
-        <div class="observatory-status" aria-hidden="true">
-          <span>R2L DATA OBSERVATORY</span>
-          <span>28 FEEDS ACTIVE</span>
-          <span>SCROLL TO LOCK FEED 17</span>
-        </div>
-        <div class="landing-frame" aria-hidden="true">
-          <span class="landing-corner frame-tl"></span>
-          <span class="landing-corner frame-tr"></span>
-          <span class="landing-corner frame-bl"></span>
-          <span class="landing-corner frame-br"></span>
-          <span class="landing-play">PLAY <i></i></span>
-          <span class="landing-signal">R2L // INPUT 01</span>
-          <span class="landing-glitch glitch-a"></span>
-          <span class="landing-glitch glitch-b"></span>
-          <span class="landing-glitch glitch-c"></span>
-          <span class="landing-glitch glitch-d"></span>
-          <img class="landing-wordmark" src="assets/r2l-wordmark-white.png" alt="">
-          <div class="landing-time-stack">
-            <span>PM 06:53</span>
-            <span>May 05.1995</span>
+      <section class="method method-one" aria-labelledby="method-one-title">
+        <div class="method-stage">
+          <div class="method-video-wrap">
+            <video src="assets/videos/wall/wall-03.mp4" muted autoplay loop playsinline preload="metadata"></video>
           </div>
-          <span class="landing-timecode">00:00:06:00</span>
+          <h1 id="method-one-title">Leader / Follower</h1>
         </div>
       </section>
 
-      <section class="zoom-journey section-dark" aria-labelledby="zoom-title">
-        <div class="zoom-sticky">
-          <div class="zoom-copy" data-reveal>
-            <p class="eyebrow">Feed 17 selected</p>
-            <h2 id="zoom-title">Lock onto one signal.</h2>
-            <p>The observatory drops away. One recording becomes a capture protocol, then a dataset.</p>
+      <section class="method method-two" aria-labelledby="method-two-title">
+        <div class="method-stage">
+          <div class="method-video-wrap">
+            <video src="assets/videos/wall/wall-06.mp4" muted autoplay loop playsinline preload="metadata"></video>
           </div>
-          <div class="zoom-screen" data-reveal>
-            <article class="feed-tile zoom-feed is-scanning" data-feed data-mode="leader">
-              <video muted autoplay loop playsinline preload="metadata" data-feature-video></video>
-              <div class="feed-fallback"></div>
-              <div class="feed-hud"><span><i></i>LOCKED</span><span>FEED 17</span></div>
-              <div class="feed-frame"></div>
-              <div class="tracking-box box-one"></div>
-              <div class="tracking-box box-two"></div>
-              <svg class="motion-path" viewBox="0 0 640 420" aria-hidden="true">
-                <path d="M90 310 C160 190 250 250 318 150 S500 122 560 210"></path>
-              </svg>
-              <div class="analysis-readout">
-                <span>CAPTURE: leader / follower</span>
-                <span>MOTION: reach, grasp, place</span>
-                <span>NEXT: method console</span>
-              </div>
-            </article>
-          </div>
+          <h1 id="method-two-title">Remote Control</h1>
         </div>
       </section>
 
-      <section id="methods" class="methods section-dark" aria-labelledby="methods-title">
-        <div class="section-intro" data-reveal>
-          <p class="eyebrow">Three ways to capture reality</p>
-          <h2 id="methods-title">Choose a capture protocol.</h2>
-          <p>Scroll through the console. Each protocol changes the feed, the readouts and the kind of robot memory being recorded.</p>
-        </div>
-
-        <div class="method-console" data-reveal>
-          <div class="method-tabs" role="tablist" aria-label="Capture methods">
-            <button class="method-tab is-active" type="button" role="tab" aria-selected="true" data-method="leader">
-              <span>01</span>
-              Leader / follower robotic arm
-            </button>
-            <button class="method-tab" type="button" role="tab" aria-selected="false" data-method="remote">
-              <span>02</span>
-              Remote control robotic arm
-            </button>
-            <button class="method-tab" type="button" role="tab" aria-selected="false" data-method="ego">
-              <span>03</span>
-              Egocentric videos
-            </button>
+      <section class="method method-three" aria-labelledby="method-three-title">
+        <div class="method-stage">
+          <div class="method-video-wrap">
+            <video src="assets/videos/wall/wall-11.mp4" muted autoplay loop playsinline preload="metadata"></video>
           </div>
-
-          <div class="method-display">
-            <div class="method-text">
-              <p class="console-label" data-method-kicker>Method 01</p>
-              <h3 data-method-title>Leader / follower robotic arm</h3>
-              <p data-method-body>Human intent is translated through a leader arm and mirrored by a follower robot arm. Ideal for precise manipulation, repeatable tasks and high-fidelity motion demonstrations.</p>
-              <ul class="method-points" data-method-points>
-                <li>Fine-grained manipulation trajectories</li>
-                <li>Synchronized human-to-robot motion</li>
-                <li>Excellent for grasping, placing and tool use</li>
-              </ul>
-            </div>
-            <div class="method-feed-stack" data-method-visual>
-              <article class="feed-tile method-main-feed" data-feed data-mode="leader">
-                <video muted autoplay loop playsinline preload="metadata"></video>
-                <div class="feed-fallback"></div>
-                <div class="feed-overlay">
-                  <span>METHOD 01</span>
-                  <span>FOLLOWER ARM</span>
-                </div>
-              </article>
-              <div class="mini-readouts">
-                <span>SYNC: 1.00</span>
-                <span>FORCE: nominal</span>
-                <span>PATH: stable</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="dataset" class="dataset section-dark" aria-labelledby="dataset-title">
-        <div class="dataset-header" data-reveal>
-          <div>
-            <p class="eyebrow">The dataset wall</p>
-            <h2 id="dataset-title">A lot of video, but never just noise.</h2>
-          </div>
-          <div class="view-toggle" aria-label="Dataset view mode">
-            <button class="is-active" type="button" data-view="raw">Raw video</button>
-            <button type="button" data-view="robot">Robot view</button>
-          </div>
-        </div>
-
-        <div class="dataset-grid" data-dataset-grid>
-          <article class="feed-tile dataset-tile" data-feed data-mode="leader" data-tags="arm grasp motion">
-            <video muted autoplay loop playsinline preload="metadata"></video>
-            <div class="feed-fallback"></div>
-            <div class="feed-overlay"><span>ARM 14</span><span>GRASP</span></div>
-          </article>
-          <article class="feed-tile dataset-tile tall" data-feed data-mode="ego" data-tags="egocentric navigation">
-            <video muted autoplay loop playsinline preload="metadata"></video>
-            <div class="feed-fallback"></div>
-            <div class="feed-overlay"><span>POV 21</span><span>WALKTHROUGH</span></div>
-          </article>
-          <article class="feed-tile dataset-tile" data-feed data-mode="remote" data-tags="remote joystick">
-            <video muted autoplay loop playsinline preload="metadata"></video>
-            <div class="feed-fallback"></div>
-            <div class="feed-overlay"><span>CTRL 07</span><span>REMOTE</span></div>
-          </article>
-          <article class="feed-tile dataset-tile wide" data-feed data-mode="leader" data-tags="sync transfer">
-            <video muted autoplay loop playsinline preload="metadata"></video>
-            <div class="feed-fallback"></div>
-            <div class="feed-overlay"><span>SYNC 03</span><span>TRANSFER</span></div>
-          </article>
-          <article class="feed-tile dataset-tile" data-feed data-mode="ego" data-tags="hands object">
-            <video muted autoplay loop playsinline preload="metadata"></video>
-            <div class="feed-fallback"></div>
-            <div class="feed-overlay"><span>HANDS 06</span><span>OBJECT USE</span></div>
-          </article>
-          <article class="feed-tile dataset-tile" data-feed data-mode="remote" data-tags="precision teleop">
-            <video muted autoplay loop playsinline preload="metadata"></video>
-            <div class="feed-fallback"></div>
-            <div class="feed-overlay"><span>TELEOP 18</span><span>PRECISION</span></div>
-          </article>
-          <article class="feed-tile dataset-tile tall" data-feed data-mode="leader" data-tags="tool use">
-            <video muted autoplay loop playsinline preload="metadata"></video>
-            <div class="feed-fallback"></div>
-            <div class="feed-overlay"><span>TOOL 02</span><span>USE</span></div>
-          </article>
-          <article class="feed-tile dataset-tile" data-feed data-mode="ego" data-tags="daily routine">
-            <video muted autoplay loop playsinline preload="metadata"></video>
-            <div class="feed-fallback"></div>
-            <div class="feed-overlay"><span>ROUTINE</span><span>DAILY TASK</span></div>
-          </article>
-          <article class="feed-tile dataset-tile wide" data-feed data-mode="remote" data-tags="edge case">
-            <video muted autoplay loop playsinline preload="metadata"></video>
-            <div class="feed-fallback"></div>
-            <div class="feed-overlay"><span>EDGE 11</span><span>RECOVERY</span></div>
-          </article>
-        </div>
-      </section>
-
-      <section id="pipeline" class="pipeline section-light" aria-labelledby="pipeline-title">
-        <div class="section-intro" data-reveal>
-          <p class="eyebrow">R2L pipeline</p>
-          <h2 id="pipeline-title">A capture system built for robotics teams, not content libraries.</h2>
-        </div>
-        <div class="pipeline-steps" data-reveal>
-          <article>
-            <span>01</span>
-            <h3>Capture</h3>
-            <p>Record controlled and real-world motion through the right method for the skill.</p>
-          </article>
-          <article>
-            <span>02</span>
-            <h3>Verify</h3>
-            <p>Check quality, synchronization, visibility, task completion and usable variation.</p>
-          </article>
-          <article>
-            <span>03</span>
-            <h3>Label</h3>
-            <p>Add task, object, motion and context metadata that robotics teams can actually train on.</p>
-          </article>
-          <article>
-            <span>04</span>
-            <h3>Structure</h3>
-            <p>Package raw footage, annotations and capture conditions into clean dataset deliveries.</p>
-          </article>
-          <article>
-            <span>05</span>
-            <h3>Deliver</h3>
-            <p>Hand over robot-ready visual data for model training, evaluation and iteration.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="personality section-dark" aria-labelledby="personality-title">
-        <div class="personality-lockup" data-reveal>
-          <img src="assets/logos/name-r2l-cropped.png" alt="" class="large-mark">
-          <div>
-            <p class="eyebrow">The R2L attitude</p>
-            <h2 id="personality-title">Robots do not learn from perfect worlds only.</h2>
-            <p>They need the half-open drawer, the awkward angle, the failed first grasp, the object slightly out of reach. We are interested in the parts of reality that make robots useful outside the lab.</p>
-          </div>
-        </div>
-        <div class="quote-strip" data-reveal>
-          <span>Useful reality over staged perfection</span>
-          <span>Motion with context</span>
-          <span>Video that becomes memory</span>
-        </div>
-      </section>
-
-      <section id="contact" class="contact section-dark" aria-labelledby="contact-title">
-        <div class="contact-panel" data-reveal>
-          <div>
-            <p class="eyebrow">Start a capture</p>
-            <h2 id="contact-title">Need the world captured for your robot?</h2>
-            <p>Tell R2L what you are training, what kind of video you need and how specific the task environment should be.</p>
-          </div>
-          <form class="contact-form">
-            <label>
-              <span>Company</span>
-              <input type="text" name="company" placeholder="Your robotics team">
-            </label>
-            <label>
-              <span>What are you training?</span>
-              <input type="text" name="training" placeholder="Humanoid, arm, embodied AI model">
-            </label>
-            <label>
-              <span>Capture need</span>
-              <textarea name="need" rows="4" placeholder="Describe the task, environment, objects or motion you need."></textarea>
-            </label>
-            <button class="button button-primary" type="submit">Transmit request</button>
-          </form>
+          <h1 id="method-three-title">Egocentric Video</h1>
         </div>
       </section>
     </main>
 
-    <script src="script.js?v=wall-reserve-top-left"></script>
+    <script src="script.js?v=static-method-cards"></script>
   </body>
 </html>
-
