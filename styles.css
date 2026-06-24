@@ -29,6 +29,7 @@ body {
 
 .scroll-indicator {
   --scroll: 0;
+  --indicator: 0;
   position: fixed;
   right: clamp(22px, 3vw, 58px);
   top: 50%;
@@ -37,8 +38,10 @@ body {
   height: 164px;
   border-radius: 999px;
   background: rgba(226, 222, 211, 0.62);
+  opacity: var(--indicator);
   transform: translateY(-50%);
   pointer-events: none;
+  transition: opacity 260ms ease;
 }
 
 .scroll-indicator::before {
@@ -127,12 +130,14 @@ img {
 
 .landing-panel img {
   position: absolute;
-  left: calc(250 * var(--u));
-  bottom: calc(230 * var(--u));
-  width: calc(1180 * var(--u));
-  min-width: 180px;
-  max-width: 440px;
+  left: clamp(24px, 2.8vw, 54px);
+  top: auto;
+  bottom: clamp(26px, 3vw, 58px);
+  width: min(34vw, 650px);
+  min-width: 280px;
+  max-width: 650px;
   height: auto;
+  transform: none;
   opacity: calc(1 - (var(--grid) * 1.28));
 }
 
@@ -198,7 +203,7 @@ img {
 
 .data-title {
   --data: 0;
-  min-height: 175svh;
+  min-height: 158svh;
   background: var(--paper);
 }
 
@@ -235,36 +240,74 @@ img {
 }
 
 .method {
-  min-height: 112svh;
-  padding: clamp(24px, 3vw, 52px) clamp(10px, 1.2vw, 22px) clamp(10px, 1.2vw, 22px);
-  display: grid;
-  grid-template-rows: auto 1fr;
-  gap: clamp(18px, 2vw, 34px);
+  --method: 0;
+  --method-reveal: 0;
+  --title-lock: 0;
+  --title-over: 0;
+  min-height: 235svh;
+  padding: 0;
+  display: block;
+  position: relative;
   background: var(--paper);
 }
 
+.method-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+
 .method h2 {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 3;
   margin: 0;
-  color: var(--ink);
-  font-size: clamp(58px, 8.3vw, 150px);
-  line-height: 0.88;
+  padding: 0 clamp(24px, 5vw, 90px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: color-mix(in srgb, var(--ink) calc((1 - var(--title-over)) * 100%), #fff calc(var(--title-over) * 100%));
+  width: 100%;
+  font-size: clamp(48px, 6.4vw, 124px);
+  line-height: 0.94;
   font-weight: 500;
-  letter-spacing: -0.025em;
-  text-align: left;
-  align-self: end;
+  letter-spacing: -0.018em;
+  text-align: center;
+  opacity: var(--method-reveal);
+  transform: translateY(calc(24svh - (var(--title-lock) * 18svh)));
+  transition:
+    opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+    color 280ms linear;
+  pointer-events: none;
 }
 
 .method video {
-  width: calc(100vw - clamp(20px, 2.4vw, 44px));
-  height: 100%;
-  min-height: 0;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: block;
+  width: 100vw;
+  height: 100svh;
   object-fit: cover;
-  border-radius: clamp(10px, 1vw, 18px);
+  border-radius: calc((1 - var(--method)) * 18px);
   background: var(--green);
+  opacity: var(--method-reveal);
+  filter: saturate(0.9) contrast(1.02);
+  transform: translateY(calc((1 - var(--method)) * 52svh)) scale(calc(0.86 + (var(--method) * 0.14)));
+  transition:
+    opacity 760ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 760ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.method.is-visible video {
+  filter: saturate(1) contrast(1);
 }
 
 .simulator {
-  padding-bottom: clamp(10px, 1.2vw, 22px);
+  padding-bottom: 0;
 }
 
 @media (min-width: 1100px) {
@@ -292,17 +335,17 @@ img {
   }
 
   .method {
-    min-height: 104svh;
-    padding: 24px 10px 10px;
-    gap: 12px;
+    min-height: 215svh;
+    padding: 0;
   }
 
   .method h2 {
-    font-size: clamp(44px, 15vw, 86px);
+    width: 100%;
+    font-size: clamp(42px, 13vw, 82px);
   }
 
   .method video {
-    width: calc(100vw - 20px);
-    height: 100%;
+    width: 100vw;
+    height: 100svh;
   }
 }

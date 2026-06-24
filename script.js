@@ -5,6 +5,7 @@ const slurpEase = (value) => 1 - Math.pow(1 - value, 5);
 const lerp = (start, end, amount) => start + (end - start) * amount;
 
 const videos = document.querySelectorAll("video");
+const methodSections = document.querySelectorAll(".method");
 
 videos.forEach((video) => {
   video.muted = true;
@@ -13,6 +14,17 @@ videos.forEach((video) => {
     video.play().catch(() => {});
   });
 });
+
+const methodObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) entry.target.classList.add("is-visible");
+    });
+  },
+  { threshold: 0.34, rootMargin: "0px 0px -12% 0px" }
+);
+
+methodSections.forEach((section) => methodObserver.observe(section));
 
 const updateJourney = () => {
   const viewport = window.innerHeight || 1;
@@ -29,6 +41,9 @@ const updateJourney = () => {
     const rect = intro.getBoundingClientRect();
     const progress = clamp((-rect.top) / Math.max(rect.height - viewport, 1), 0, 1);
     intro.style.setProperty("--intro", progress.toFixed(4));
+    if (scrollIndicator) {
+      scrollIndicator.style.setProperty("--indicator", rect.bottom <= viewport * 1.02 ? "1" : "0");
+    }
 
     const miniGrid = intro.querySelector(".mini-grid");
     const artboard = intro.querySelector(".artboard");
@@ -67,6 +82,20 @@ const updateJourney = () => {
     const progress = clamp((-rect.top) / Math.max(rect.height - viewport, 1), 0, 1);
     dataTitle.style.setProperty("--data", easeOut(progress).toFixed(4));
   }
+
+  methodSections.forEach((section) => {
+    const rect = section.getBoundingClientRect();
+    const travel = Math.max(rect.height - viewport, 1);
+    const progress = clamp((-rect.top) / travel, 0, 1);
+    const revealProgress = easeOut(progressBetween(viewport - rect.top, viewport * 0.34, viewport * 0.58));
+    const methodProgress = easeOut(progressBetween(progress, 0.06, 0.82));
+    const titleLockProgress = easeOut(progressBetween(methodProgress, 0, 0.72));
+    const titleOverVideo = easeOut(progressBetween(methodProgress, 0.4, 0.66));
+    section.style.setProperty("--method-reveal", revealProgress.toFixed(4));
+    section.style.setProperty("--method", methodProgress.toFixed(4));
+    section.style.setProperty("--title-lock", titleLockProgress.toFixed(4));
+    section.style.setProperty("--title-over", titleOverVideo.toFixed(4));
+  });
 };
 
 updateJourney();
