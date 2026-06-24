@@ -133,9 +133,9 @@ img {
   left: clamp(24px, 2.8vw, 54px);
   top: auto;
   bottom: clamp(26px, 3vw, 58px);
-  width: min(34vw, 650px);
-  min-width: 280px;
-  max-width: 650px;
+  width: min(30vw, 580px);
+  min-width: 250px;
+  max-width: 580px;
   height: auto;
   transform: none;
   opacity: calc(1 - (var(--grid) * 1.28));
