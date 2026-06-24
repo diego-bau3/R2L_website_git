@@ -84,8 +84,8 @@ img {
   --landing-top: clamp(8px, 0.75vw, 14px);
   --landing-width: calc(100% - (clamp(8px, 0.75vw, 14px) * 2));
   --landing-height: calc(100svh - (clamp(8px, 0.75vw, 14px) * 2));
-  height: 210svh;
-  background: var(--paper);
+  height: 150svh;
+  background: #fff;
 }
 
 .intro-sticky {
@@ -95,7 +95,7 @@ img {
   display: grid;
   place-items: center;
   overflow: hidden;
-  background: var(--paper);
+  background: #fff;
 }
 
 .artboard {
@@ -103,7 +103,7 @@ img {
   width: var(--max);
   height: 100svh;
   overflow: hidden;
-  background: var(--paper);
+  background: #fff;
 }
 
 .landing-panel {
@@ -129,9 +129,9 @@ img {
   position: absolute;
   left: calc(250 * var(--u));
   bottom: calc(230 * var(--u));
-  width: calc(760 * var(--u));
-  min-width: 120px;
-  max-width: 280px;
+  width: calc(1180 * var(--u));
+  min-width: 180px;
+  max-width: 440px;
   height: auto;
   opacity: calc(1 - (var(--grid) * 1.28));
 }
@@ -235,34 +235,29 @@ img {
 }
 
 .method {
-  min-height: 118svh;
-  padding: clamp(10px, 1.2vw, 22px);
+  min-height: 112svh;
+  padding: clamp(24px, 3vw, 52px) clamp(10px, 1.2vw, 22px) clamp(10px, 1.2vw, 22px);
   display: grid;
-  place-items: center;
+  grid-template-rows: auto 1fr;
+  gap: clamp(18px, 2vw, 34px);
   background: var(--paper);
-  position: relative;
 }
 
 .method h2 {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 2;
-  width: min(66vw, 1080px);
   margin: 0;
-  color: #fff;
-  font-size: clamp(54px, 7.2vw, 138px);
-  line-height: 0.96;
+  color: var(--ink);
+  font-size: clamp(58px, 8.3vw, 150px);
+  line-height: 0.88;
   font-weight: 500;
   letter-spacing: -0.025em;
-  text-align: center;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
+  text-align: left;
+  align-self: end;
 }
 
 .method video {
   width: calc(100vw - clamp(20px, 2.4vw, 44px));
-  height: calc(100svh - clamp(20px, 2.4vw, 44px));
+  height: 100%;
+  min-height: 0;
   object-fit: cover;
   border-radius: clamp(10px, 1vw, 18px);
   background: var(--green);
@@ -289,7 +284,7 @@ img {
   }
 
   .intro-sequence {
-    height: 210svh;
+    height: 150svh;
   }
 
   .artboard {
@@ -297,17 +292,17 @@ img {
   }
 
   .method {
-    min-height: 112svh;
-    padding: 10px;
+    min-height: 104svh;
+    padding: 24px 10px 10px;
+    gap: 12px;
   }
 
   .method h2 {
-    width: 68vw;
-    font-size: clamp(42px, 13vw, 72px);
+    font-size: clamp(44px, 15vw, 86px);
   }
 
   .method video {
     width: calc(100vw - 20px);
-    height: calc(100svh - 20px);
+    height: 100%;
   }
 }

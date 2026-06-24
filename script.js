@@ -32,7 +32,7 @@ const updateJourney = () => {
 
     const miniGrid = intro.querySelector(".mini-grid");
     const artboard = intro.querySelector(".artboard");
-    const gridProgress = slurpEase(progressBetween(progress, 0.08, 0.58));
+    const gridProgress = slurpEase(progressBetween(progress, 0.06, 0.92));
 
     intro.style.setProperty("--grid", gridProgress.toFixed(4));
     if (miniGrid) miniGrid.style.setProperty("--grid", gridProgress.toFixed(4));
@@ -52,7 +52,7 @@ const updateJourney = () => {
       const cellHeight = (gridHeight - rowGap * 2) / 3;
       const targetLeft = gridRect.left - artRect.left + cellWidth + columnGap;
       const targetTop = gridRect.top - artRect.top + cellHeight + rowGap;
-      const settle = easeOut(progressBetween(progress, 0.02, 0.48));
+      const settle = easeOut(progressBetween(progress, 0.02, 0.76));
 
       intro.style.setProperty("--landing-left", `${lerp(inset, targetLeft, settle).toFixed(2)}px`);
       intro.style.setProperty("--landing-top", `${lerp(inset, targetTop, settle).toFixed(2)}px`);
