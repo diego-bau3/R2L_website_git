@@ -7,44 +7,76 @@
     <title>R2L | Real-world robot data</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Inter+Tight:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=static-method-cards">
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=same-speed-title-17">
   </head>
   <body>
+    <div class="scroll-indicator" aria-hidden="true">
+      <span></span>
+    </div>
     <main>
-      <section class="hero" aria-label="R2L">
-        <video class="hero-video" src="assets/videos/landing/landing-01.mp4" muted autoplay loop playsinline preload="metadata"></video>
-        <img class="hero-logo" src="assets/r2l-wordmark-white.png" alt="R2L">
-      </section>
+      <section class="intro-sequence" aria-label="R2L data journey">
+        <div class="intro-sticky">
+          <div class="artboard">
+            <div class="landing-panel">
+              <video src="assets/videos/landing/landing-01.mp4" muted autoplay loop playsinline preload="metadata"></video>
+              <img src="assets/r2l-wordmark-white.png" alt="R2L">
+            </div>
 
-      <section class="method method-one" aria-labelledby="method-one-title">
-        <div class="method-stage">
-          <div class="method-video-wrap">
-            <video src="assets/videos/wall/wall-03.mp4" muted autoplay loop playsinline preload="metadata"></video>
+            <div class="mini-grid" aria-hidden="true">
+              <div class="side-column side-left">
+                <video style="--x:-70vw;--y:-12vh" src="assets/videos/wall/wall-11.mp4" muted autoplay loop playsinline preload="metadata"></video>
+                <video style="--x:-76vw;--y:0vh" src="assets/videos/wall/wall-12.mp4" muted autoplay loop playsinline preload="metadata"></video>
+                <video style="--x:-70vw;--y:14vh" src="assets/videos/wall/wall-13.mp4" muted autoplay loop playsinline preload="metadata"></video>
+              </div>
+              <video style="--x:-44vw;--y:-12vh" src="assets/videos/wall/wall-01.mp4" muted autoplay loop playsinline preload="metadata"></video>
+              <video style="--x:0vw;--y:-18vh" src="assets/videos/wall/wall-02.mp4" muted autoplay loop playsinline preload="metadata"></video>
+              <video style="--x:44vw;--y:-12vh" src="assets/videos/wall/wall-03.mp4" muted autoplay loop playsinline preload="metadata"></video>
+              <video style="--x:-54vw;--y:0vh" src="assets/videos/wall/wall-04.mp4" muted autoplay loop playsinline preload="metadata"></video>
+              <video style="--x:0vw;--y:0vh" src="assets/videos/landing/landing-01.mp4" muted autoplay loop playsinline preload="metadata"></video>
+              <video style="--x:54vw;--y:0vh" src="assets/videos/wall/wall-07.mp4" muted autoplay loop playsinline preload="metadata"></video>
+              <video style="--x:-44vw;--y:14vh" src="assets/videos/wall/wall-08.mp4" muted autoplay loop playsinline preload="metadata"></video>
+              <video style="--x:0vw;--y:20vh" src="assets/videos/wall/wall-09.mp4" muted autoplay loop playsinline preload="metadata"></video>
+              <video style="--x:44vw;--y:14vh" src="assets/videos/wall/wall-10.mp4" muted autoplay loop playsinline preload="metadata"></video>
+              <div class="side-column side-right">
+                <video style="--x:70vw;--y:-12vh" src="assets/videos/wall/wall-11.mp4" muted autoplay loop playsinline preload="metadata"></video>
+                <video style="--x:76vw;--y:0vh" src="assets/videos/wall/wall-12.mp4" muted autoplay loop playsinline preload="metadata"></video>
+                <video style="--x:70vw;--y:14vh" src="assets/videos/wall/wall-13.mp4" muted autoplay loop playsinline preload="metadata"></video>
+              </div>
+            </div>
           </div>
-          <h1 id="method-one-title">Leader / Follower</h1>
         </div>
       </section>
 
-      <section class="method method-two" aria-labelledby="method-two-title">
-        <div class="method-stage">
-          <div class="method-video-wrap">
-            <video src="assets/videos/wall/wall-06.mp4" muted autoplay loop playsinline preload="metadata"></video>
-          </div>
-          <h1 id="method-two-title">Remote Control</h1>
-        </div>
+      <section class="data-title" aria-label="Data collection methods">
+        <h1>
+          <span class="word data">Data</span>
+          <span class="word collection">Collection</span>
+          <span class="word methods">Methods</span>
+        </h1>
       </section>
 
-      <section class="method method-three" aria-labelledby="method-three-title">
-        <div class="method-stage">
-          <div class="method-video-wrap">
-            <video src="assets/videos/wall/wall-11.mp4" muted autoplay loop playsinline preload="metadata"></video>
-          </div>
-          <h1 id="method-three-title">Egocentric Video</h1>
-        </div>
+      <section class="method method-one" aria-labelledby="leader-title">
+        <h2 id="leader-title">Leader - Follower</h2>
+        <video src="assets/videos/wall/wall-03.mp4" muted autoplay loop playsinline preload="metadata"></video>
+      </section>
+
+      <section class="method method-two" aria-labelledby="remote-title">
+        <h2 id="remote-title">Remote Control</h2>
+        <video src="assets/videos/wall/wall-06.mp4" muted autoplay loop playsinline preload="metadata"></video>
+      </section>
+
+      <section class="method method-three" aria-labelledby="ego-title">
+        <h2 id="ego-title">Egocentric Data</h2>
+        <video src="assets/videos/wall/wall-11.mp4" muted autoplay loop playsinline preload="metadata"></video>
+      </section>
+
+      <section class="method simulator" aria-labelledby="sim-title">
+        <h2 id="sim-title">Simulator</h2>
+        <video src="assets/videos/wall/wall-13.mp4" muted autoplay loop playsinline preload="metadata"></video>
       </section>
     </main>
 
-    <script src="script.js?v=static-method-cards"></script>
+    <script src="script.js?v=same-speed-title-17"></script>
   </body>
 </html>
