@@ -75,7 +75,9 @@ const videoManifest = {
     "assets/videos/remote-control/WhatsApp Video 2026-06-13 at 15.25.18.mp4",
   ],
   simulator: [
-    "assets/videos/simulator/x_20260514_230009.mp4",
+    "assets/videos/simulator/sally-recording-2026-06-27T08-22-06.mp4",
+    "assets/videos/simulator/sally-recording-2026-06-27T08-27-54.mp4",
+    "assets/videos/simulator/sally-recording-2026-06-27T08-31-09.mp4",
   ],
 };
 
