@@ -161,6 +161,7 @@ img {
 
 .mini-grid video,
 .side-column video {
+  --slot-fade: 1;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -169,8 +170,9 @@ img {
   transform:
     translate3d(calc(var(--x) * (1 - var(--grid))), calc(var(--y) * (1 - var(--grid))), 0)
     scale(calc(0.68 + (var(--grid) * 0.32)));
-  opacity: calc(0.02 + (var(--grid) * 0.98));
+  opacity: calc((0.02 + (var(--grid) * 0.98)) * var(--slot-fade));
   box-shadow: none;
+  transition: opacity 220ms ease;
   will-change: transform, opacity;
 }
 
@@ -285,6 +287,7 @@ img {
 }
 
 .method video {
+  --slot-fade: 1;
   position: absolute;
   inset: 0;
   z-index: 1;
@@ -294,7 +297,7 @@ img {
   object-fit: cover;
   border-radius: calc((1 - var(--method)) * 18px);
   background: var(--green);
-  opacity: var(--method-reveal);
+  opacity: calc(var(--method-reveal) * var(--slot-fade));
   filter: saturate(0.9) contrast(1.02);
   transform: translateY(calc((1 - var(--method)) * 52svh)) scale(calc(0.86 + (var(--method) * 0.14)));
   transition:

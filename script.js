@@ -4,6 +4,84 @@ const easeOut = (value) => 1 - Math.pow(1 - value, 3);
 const slurpEase = (value) => 1 - Math.pow(1 - value, 5);
 const lerp = (start, end, amount) => start + (end - start) * amount;
 
+const videoManifest = {
+  wall: [
+    "assets/videos/wall-videos/simulator-01.mp4",
+    "assets/videos/wall-videos/wall-01.mp4",
+    "assets/videos/wall-videos/wall-02.mp4",
+    "assets/videos/wall-videos/wall-03.mp4",
+    "assets/videos/wall-videos/wall-04.mp4",
+    "assets/videos/wall-videos/wall-06.mp4",
+    "assets/videos/wall-videos/wall-07.mp4",
+    "assets/videos/wall-videos/wall-08.mp4",
+    "assets/videos/wall-videos/wall-09.mp4",
+    "assets/videos/wall-videos/wall-10.mp4",
+    "assets/videos/wall-videos/wall-11.mp4",
+    "assets/videos/wall-videos/wall-12.mp4",
+    "assets/videos/wall-videos/wall-13.mp4",
+    "assets/videos/wall-videos/x_20260514_202251.mp4",
+    "assets/videos/wall-videos/x_20260514_202811.mp4",
+    "assets/videos/wall-videos/x_20260514_225803.mp4",
+    "assets/videos/wall-videos/x_20260514_230009.mp4",
+    "assets/videos/wall-videos/x_20260517_232317.mp4",
+    "assets/videos/wall-videos/x_20260517_232433.mp4",
+    "assets/videos/wall-videos/x_20260517_232828.mp4",
+    "assets/videos/wall-videos/x_20260517_234012.mp4",
+    "assets/videos/wall-videos/x_20260617_142331.mp4",
+    "assets/videos/wall-videos/x_20260617_144418.mp4",
+    "assets/videos/wall-videos/x_20260617_144717.mp4",
+    "assets/videos/wall-videos/x_20260617_145317.mp4",
+    "assets/videos/wall-videos/x_20260617_145603.mp4",
+    "assets/videos/wall-videos/x_20260617_164847.mp4",
+    "assets/videos/wall-videos/x_20260617_204852.mp4",
+    "assets/videos/wall-videos/x_20260617_212645.mp4",
+    "assets/videos/wall-videos/x_20260617_220044.mp4",
+    "assets/videos/wall-videos/x_20260617_220620.mp4",
+    "assets/videos/wall-videos/x_20260617_220925.mp4",
+    "assets/videos/wall-videos/x_20260617_221300.mp4",
+    "assets/videos/wall-videos/x_20260618_001727.mp4",
+  ],
+  egocentricData: [
+    "assets/videos/egocentric-data/simulator-01.mp4",
+    "assets/videos/egocentric-data/x_20260514_202251.mp4",
+    "assets/videos/egocentric-data/x_20260514_202811.mp4",
+    "assets/videos/egocentric-data/x_20260514_225803.mp4",
+    "assets/videos/egocentric-data/x_20260514_230009.mp4",
+    "assets/videos/egocentric-data/x_20260517_232317.mp4",
+    "assets/videos/egocentric-data/x_20260517_232433.mp4",
+    "assets/videos/egocentric-data/x_20260517_232828.mp4",
+    "assets/videos/egocentric-data/x_20260517_234012.mp4",
+    "assets/videos/egocentric-data/x_20260617_142331.mp4",
+    "assets/videos/egocentric-data/x_20260617_144418.mp4",
+    "assets/videos/egocentric-data/x_20260617_144717.mp4",
+    "assets/videos/egocentric-data/x_20260617_145317.mp4",
+    "assets/videos/egocentric-data/x_20260617_145603.mp4",
+    "assets/videos/egocentric-data/x_20260617_164847.mp4",
+    "assets/videos/egocentric-data/x_20260617_204852.mp4",
+    "assets/videos/egocentric-data/x_20260617_212645.mp4",
+    "assets/videos/egocentric-data/x_20260617_220044.mp4",
+    "assets/videos/egocentric-data/x_20260617_220620.mp4",
+    "assets/videos/egocentric-data/x_20260617_220925.mp4",
+    "assets/videos/egocentric-data/x_20260617_221300.mp4",
+    "assets/videos/egocentric-data/x_20260618_001727.mp4",
+  ],
+  leaderFollower: [
+    "assets/videos/leader-follower/egocentric-data-01.mp4",
+    "assets/videos/leader-follower/landing-01.mp4",
+    "assets/videos/leader-follower/leader-follower-01.mp4",
+    "assets/videos/leader-follower/remote-control-01.mp4",
+  ],
+  remoteControl: [
+    "assets/videos/remote-control/WhatsApp Video 2026-06-13 at 15.25.18.mp4",
+  ],
+  simulator: [
+    "assets/videos/simulator/x_20260514_230009.mp4",
+  ],
+};
+
+const wallDuration = 6000;
+const methodDuration = 6000;
+
 const videos = document.querySelectorAll("video");
 const methodSections = document.querySelectorAll(".method");
 
@@ -25,6 +103,95 @@ const methodObserver = new IntersectionObserver(
 );
 
 methodSections.forEach((section) => methodObserver.observe(section));
+
+const randomItem = (items) => items[Math.floor(Math.random() * items.length)];
+
+const shuffle = (items) => {
+  const shuffled = [...items];
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+  }
+  return shuffled;
+};
+
+const createPlaylist = (sources) => {
+  let queue = [];
+  let lastSource = "";
+
+  return () => {
+    if (!queue.length) {
+      queue = shuffle(sources);
+      if (queue.length > 1 && queue[0] === lastSource) {
+        [queue[0], queue[1]] = [queue[1], queue[0]];
+      }
+    }
+
+    lastSource = queue.shift();
+    return lastSource;
+  };
+};
+
+const setRandomStart = (video) => {
+  if (!Number.isFinite(video.duration) || video.duration <= 1.5) return;
+  video.currentTime = Math.random() * Math.max(video.duration - 0.8, 0);
+};
+
+const swapVideo = (video, source, { randomStart = false } = {}) => {
+  if (!source) return;
+  video.style.setProperty("--slot-fade", "0");
+
+  window.setTimeout(() => {
+    const currentSource = decodeURI(video.currentSrc || "");
+    const isSameSource = currentSource.endsWith(source) || video.getAttribute("src") === source;
+    const reveal = () => {
+      if (randomStart) setRandomStart(video);
+      video.play().catch(() => {});
+      video.style.setProperty("--slot-fade", "1");
+    };
+
+    if (isSameSource) {
+      video.currentTime = 0;
+      reveal();
+      return;
+    }
+
+    video.addEventListener("loadedmetadata", reveal, { once: true });
+    video.src = source;
+    video.load();
+
+    if (video.readyState >= 1) {
+      reveal();
+    }
+  }, 160);
+};
+
+const startWallVideoRotation = () => {
+  const wallVideos = document.querySelectorAll(".mini-grid video");
+  if (!videoManifest.wall.length) return;
+
+  wallVideos.forEach((video, index) => {
+    const rotate = () => {
+      const choices = videoManifest.wall.filter((source) => !video.currentSrc.endsWith(source));
+      const nextSource = randomItem(choices.length ? choices : videoManifest.wall);
+      swapVideo(video, nextSource, { randomStart: true });
+      window.setTimeout(rotate, wallDuration);
+    };
+
+    window.setTimeout(rotate, index * 180);
+  });
+};
+
+const startMethodVideoRotation = () => {
+  document.querySelectorAll("[data-video-playlist]").forEach((video) => {
+    const sources = videoManifest[video.dataset.videoPlaylist] || [];
+    if (!sources.length) return;
+
+    const nextSource = createPlaylist(sources);
+    swapVideo(video, nextSource());
+    window.setInterval(() => swapVideo(video, nextSource()), methodDuration);
+  });
+};
 
 const updateJourney = () => {
   const viewport = window.innerHeight || 1;
@@ -98,6 +265,8 @@ const updateJourney = () => {
   });
 };
 
+startWallVideoRotation();
+startMethodVideoRotation();
 updateJourney();
 window.addEventListener("scroll", updateJourney, { passive: true });
 window.addEventListener("resize", updateJourney);
