@@ -1,32 +1,37 @@
 # R2L video library
 
-Videos are organized by website surface:
+Videos are organized by website surface, so each part of the site can be changed without touching the others.
 
-- `landing/` is used for the opening full-screen landing feed.
-- `wall/` is used for the observatory wall, method previews, and dataset wall until dedicated method/dataset footage is added.
+## Folders
 
-Source folder:
+- `landingpage/` - opening full-screen landing video.
+- `wall-videos/` - the video grid/wall after the landing zoom-out.
+- `leader-follower/` - method video for Leader - Follower.
+- `remote-control/` - method video for Remote Control.
+- `egocentric-data/` - method video for Egocentric Data.
+- `simulator/` - method video for Simulator.
 
-`C:\Privé\Werk\Diego\Humanoids\Website\Videos`
+## Current website mapping
 
-Encoding:
+- Landing page: `landingpage/landing-01.mp4`
+- Wall videos: `wall-videos/wall-01.mp4` through `wall-videos/wall-13.mp4`
+- Leader - Follower: `leader-follower/leader-follower-01.mp4`
+- Remote Control: `remote-control/remote-control-01.mp4`
+- Egocentric Data: `egocentric-data/egocentric-data-01.mp4`
+- Simulator: `simulator/simulator-01.mp4`
 
-- Landing: MP4, H.264, 1080p height, no audio.
-- Wall: MP4, H.264, 720p height, no audio.
+## Replacing videos
+
+To change a video later, replace the file in the matching folder and keep the same filename. That way the website code does not need to change.
+
+Examples:
+
+- Replace the landing video with a new MP4 named `landing-01.mp4` inside `landingpage/`.
+- Replace the Leader - Follower method video with a new MP4 named `leader-follower-01.mp4` inside `leader-follower/`.
+- Replace wall footage by swapping files inside `wall-videos/`.
+
+## Encoding
+
+- MP4, H.264 is recommended.
+- No audio is needed.
 - Aspect ratio is preserved. The website uses `object-fit: cover`, so videos fill their frames without distortion.
-
-Current mapping:
-
-- `landing/landing-01.mp4` from `Landing/TOIM8598.MP4`
-- `wall/wall-01.mp4` from `Wall/BHNZ5633.MP4`
-- `wall/wall-02.mp4` from `Wall/BIMOE1518.MOV`
-- `wall/wall-03.mp4` from `Wall/HFFW4800.MP4`
-- `wall/wall-04.mp4` from `Wall/LDMUE7906.MOV`
-- `wall/wall-06.mp4` from `Wall/MIUT6462.MP4`
-- `wall/wall-07.mp4` from `Wall/NMUL0354.MP4`
-- `wall/wall-08.mp4` from `Wall/ONDME9789.MOV`
-- `wall/wall-09.mp4` from `Wall/TQICE2633.MOV`
-- `wall/wall-10.mp4` from `Wall/UWUOE0051.MOV`
-- `wall/wall-11.mp4` from `Wall/VPJY3660.MP4`
-- `wall/wall-12.mp4` from `Wall/WXAS0762.MP4`
-- `wall/wall-13.mp4` from `Wall/WIVRE3100.MOV`
