@@ -112,6 +112,7 @@ const videos = document.querySelectorAll("video");
 const methodSections = document.querySelectorAll(".method");
 const siteFooter = document.querySelector(".site-footer");
 const captureTime = document.querySelector(".capture-time");
+const isMobileViewport = () => window.matchMedia("(max-width: 760px)").matches;
 let introSoftSnapActive = false;
 let introSoftSnapDone = false;
 let introSoftSnapTimer = 0;
@@ -376,6 +377,7 @@ const updateJourney = () => {
   }
 
   if (intro) {
+    const isMobile = isMobileViewport();
     const rect = intro.getBoundingClientRect();
     const progress = clamp((-rect.top) / Math.max(rect.height - viewport, 1), 0, 1);
     const scrollingDown = window.scrollY >= lastScrollY;
@@ -387,7 +389,13 @@ const updateJourney = () => {
     if (progress < 0.28) introSoftSnapDone = false;
     if (progress >= 0.76) introSoftSnapDone = true;
     window.clearTimeout(introSoftSnapTimer);
+    if (isMobile) {
+      cancelIntroSoftSnap();
+      introSoftSnapDone = true;
+    }
+
     if (
+      !isMobile &&
       scrollingDown &&
       !introSoftSnapActive &&
       !introSoftSnapDone &&
@@ -469,7 +477,10 @@ const updateJourney = () => {
     const footerRect = siteFooter?.getBoundingClientRect();
     const snapZoneStarted = firstMethodRect.top <= viewport * 0.25;
     const snapZoneEnded = footerRect ? footerRect.bottom < viewport * 0.1 : false;
-    document.documentElement.classList.toggle("snap-methods", snapZoneStarted && !snapZoneEnded);
+    document.documentElement.classList.toggle(
+      "snap-methods",
+      !isMobileViewport() && snapZoneStarted && !snapZoneEnded
+    );
   }
 
   methodSections.forEach((section) => {
