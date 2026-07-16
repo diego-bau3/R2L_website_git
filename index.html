@@ -9,7 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=mobile-ready-40">
+    <link rel="stylesheet" href="https://use.typekit.net/hai6gwm.css">
+    <link rel="stylesheet" href="styles.css?v=landing-x-icon-147">
   </head>
   <body>
     <div class="scroll-indicator" aria-hidden="true">
@@ -21,6 +22,9 @@
           <div class="artboard">
             <div class="landing-panel">
               <video data-video-playlist="landingpage" src="assets/videos/landingpage/L1.mp4" muted autoplay loop playsinline preload="metadata"></video>
+              <a class="landing-social" href="#" aria-label="Ready2Learn on X">
+                <img src="assets/x-logo.png" alt="">
+              </a>
               <img src="assets/r2l-wordmark-white-cropped.png" alt="R2L">
             </div>
 
@@ -45,47 +49,89 @@
                 <div class="video-slot" style="--x:70vw;--y:14vh"><video class="is-active" src="assets/videos/wall-videos/W15.mp4" muted autoplay playsinline preload="metadata"></video><video class="is-buffering" muted playsinline preload="auto"></video></div>
               </div>
             </div>
+
+            <div class="capture-overlay" aria-hidden="true">
+              <div class="capture-corner capture-corner-tl"></div>
+              <div class="capture-corner capture-corner-tr"></div>
+              <div class="capture-corner capture-corner-bl"></div>
+              <div class="capture-corner capture-corner-br"></div>
+              <div class="capture-label"><span></span>REC</div>
+              <div class="capture-time">00:00:00:00</div>
+            </div>
           </div>
         </div>
       </section>
 
       <section class="data-title" aria-label="Data collection methods">
-        <h1>
-          <span class="word data">Data</span>
-          <span class="word collection">Collection</span>
-          <span class="word methods">Methods</span>
-        </h1>
+        <div class="data-title-sticky">
+          <div class="folder-transition" aria-hidden="true">
+            <svg viewBox="0 0 1903.49 81.54" preserveAspectRatio="none" focusable="false">
+              <path d="M0,24.77C0,11.15,11.15,0,24.77,0h396.93c9.02,0,19.35,4.26,24.74,11.49l27,37.16c6.2,8.32,14.13,13.22,24.51,13.22h1383.57c10.86,0,19.66,8.8,19.66,19.66h2.3H4.72c-2.61,0-4.72-2.11-4.72-4.72V24.77Z"></path>
+            </svg>
+          </div>
+          <div class="data-title-inner">
+            <h1>
+              <span class="word data">Data</span>
+              <span class="word collection">collection</span>
+              <span class="word methods">methods</span>
+            </h1>
+          </div>
+        </div>
       </section>
 
       <section class="method method-one" aria-labelledby="ego-title">
         <div class="method-stage">
-          <h2 id="ego-title">Egocentric</h2>
-          <div class="method-video-frame"><video data-video-playlist="egocentricData" src="assets/videos/egocentric-data/E1_Making a video.mp4" muted loop playsinline preload="none"></video></div>
+          <div class="method-copy">
+            <h2 id="ego-title">Egocentric</h2>
+            <p>First-person video captures how people naturally move, use objects, and complete everyday tasks.</p>
+          </div>
+          <div class="method-video-frame"><video data-video-playlist="egocentricData" data-src="assets/videos/egocentric-data/E1_Making a video.mp4" muted loop playsinline preload="none"></video></div>
         </div>
       </section>
 
       <section class="method method-two" aria-labelledby="leader-title">
         <div class="method-stage">
-          <h2 id="leader-title">Leader - Follower</h2>
-          <div class="method-video-frame"><video data-video-playlist="leaderFollower" src="assets/videos/leader-follower/A1_Putting the ball in the cup.mp4" muted loop playsinline preload="none"></video></div>
+          <div class="method-copy">
+            <h2 id="leader-title">Leader-follower</h2>
+            <p>Human-guided demonstrations turn robot motion into training data for manipulation skills.</p>
+          </div>
+          <div class="method-video-frame"><video data-video-playlist="leaderFollower" data-src="assets/videos/leader-follower/A1_Putting the ball in the cup.mp4" muted loop playsinline preload="none"></video></div>
         </div>
       </section>
 
       <section class="method method-three" aria-labelledby="remote-title">
         <div class="method-stage">
-          <h2 id="remote-title">Remote Control</h2>
-          <div class="method-video-frame"><video data-video-playlist="remoteControl" src="assets/videos/remote-control/R1_Remote controled robotarm.mp4" muted loop playsinline preload="none"></video></div>
+          <div class="method-copy">
+            <h2 id="remote-title">Remote control</h2>
+            <p>Remote operation creates practical examples of robot movement, interaction, and recovery.</p>
+          </div>
+          <div class="method-video-frame"><video data-video-playlist="remoteControl" data-src="assets/videos/remote-control/R1_Remote controled robotarm.mp4" muted loop playsinline preload="none"></video></div>
         </div>
       </section>
 
       <section class="method simulator" aria-labelledby="sim-title">
         <div class="method-stage">
-          <h2 id="sim-title">Simulator</h2>
-          <div class="method-video-frame"><video data-video-playlist="simulator" src="assets/videos/simulator/sally-recording-2026-06-27T08-22-06.mp4" muted loop playsinline preload="none"></video></div>
+          <div class="method-copy">
+            <h2 id="sim-title">Simulator</h2>
+            <p>Simulation gives robots a safe space to rehearse tasks before real-world deployment.</p>
+          </div>
+          <div class="method-video-frame"><video data-video-playlist="simulator" data-src="assets/videos/simulator/sally-recording-2026-06-27T08-22-06.mp4" muted loop playsinline preload="none"></video></div>
         </div>
       </section>
+
+      <footer class="site-footer" aria-label="Contact">
+        <div class="footer-panel">
+          <a class="social-link" href="#" aria-label="Ready2Learn on X">
+            <img class="social-icon" src="assets/x-logo.png" alt="">
+          </a>
+
+          <img class="footer-logo" src="assets/r2l-logo.png" alt="R2L">
+
+          <p class="footer-copyright">&copy; 2026 Ready2Learn</p>
+        </div>
+      </footer>
     </main>
 
-    <script src="script.js?v=wall-double-buffer-49"></script>
+    <script src="script.js?v=data-title-hold-peek-101"></script>
   </body>
 </html>

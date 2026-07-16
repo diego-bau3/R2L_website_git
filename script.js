@@ -3,6 +3,38 @@ const progressBetween = (value, start, end) => clamp((value - start) / (end - st
 const easeOut = (value) => 1 - Math.pow(1 - value, 3);
 const slurpEase = (value) => 1 - Math.pow(1 - value, 5);
 const lerp = (start, end, amount) => start + (end - start) * amount;
+const easeInOutCubic = (value) =>
+  value < 0.5 ? 4 * value * value * value : 1 - Math.pow(-2 * value + 2, 3) / 2;
+
+const animateScrollTo = (targetY, duration = 1500, onComplete = () => {}) => {
+  const startY = window.scrollY;
+  const distance = targetY - startY;
+  const startTime = performance.now();
+  let isCancelled = false;
+  let frame = 0;
+
+  const step = (time) => {
+    if (isCancelled) return;
+    const progress = clamp((time - startTime) / duration, 0, 1);
+    window.scrollTo(0, startY + distance * easeInOutCubic(progress));
+
+    if (progress < 1) {
+      frame = window.requestAnimationFrame(step);
+      return;
+    }
+
+    onComplete(true);
+  };
+
+  frame = window.requestAnimationFrame(step);
+
+  return () => {
+    if (isCancelled) return;
+    isCancelled = true;
+    window.cancelAnimationFrame(frame);
+    onComplete(false);
+  };
+};
 
 const videoManifest = {
   wall: [
@@ -78,6 +110,13 @@ const methodDuration = 6000;
 
 const videos = document.querySelectorAll("video");
 const methodSections = document.querySelectorAll(".method");
+const siteFooter = document.querySelector(".site-footer");
+const captureTime = document.querySelector(".capture-time");
+let introSoftSnapActive = false;
+let introSoftSnapDone = false;
+let introSoftSnapTimer = 0;
+let introSoftSnapCancel = null;
+let lastScrollY = window.scrollY;
 
 videos.forEach((video) => {
   video.muted = true;
@@ -155,6 +194,7 @@ const swapVideo = (video, source, { randomStart = false } = {}) => {
   }
 
   video.addEventListener("loadedmetadata", playVideo, { once: true });
+  video.preload = "auto";
   video.src = source;
   video.load();
 
@@ -246,7 +286,13 @@ const startMethodVideoRotation = () => {
     if (!sources.length) return;
 
     const nextSource = createPlaylist(sources);
-    const rotate = () => swapVideo(video, nextSource());
+    const firstSource = video.dataset.src;
+    const rotate = () => {
+      const source =
+        firstSource && video.dataset.firstSourceLoaded !== "true" ? firstSource : nextSource();
+      video.dataset.firstSourceLoaded = "true";
+      swapVideo(video, source);
+    };
     const start = () => {
       if (video.dataset.rotationStarted === "true") return;
       video.dataset.rotationStarted = "true";
@@ -269,7 +315,7 @@ const startMethodVideoRotation = () => {
           lazyObserver.disconnect();
         }
       },
-      { rootMargin: "45% 0px", threshold: 0.01 }
+      { rootMargin: "120% 0px", threshold: 0.01 }
     );
 
     lazyObserver.observe(section || video);
@@ -301,6 +347,23 @@ const startVideoVisibilityControl = () => {
   videos.forEach((video) => playbackObserver.observe(video));
 };
 
+const cancelIntroSoftSnap = () => {
+  if (!introSoftSnapActive) return;
+
+  if (introSoftSnapCancel) {
+    introSoftSnapCancel();
+    introSoftSnapCancel = null;
+  }
+
+  introSoftSnapActive = false;
+  introSoftSnapDone = true;
+};
+
+const cancelIntroSoftSnapOnKey = (event) => {
+  const scrollKeys = ["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "];
+  if (scrollKeys.includes(event.key)) cancelIntroSoftSnap();
+};
+
 const updateJourney = () => {
   const viewport = window.innerHeight || 1;
   const intro = document.querySelector(".intro-sequence");
@@ -315,14 +378,49 @@ const updateJourney = () => {
   if (intro) {
     const rect = intro.getBoundingClientRect();
     const progress = clamp((-rect.top) / Math.max(rect.height - viewport, 1), 0, 1);
+    const scrollingDown = window.scrollY >= lastScrollY;
     intro.style.setProperty("--intro", progress.toFixed(4));
     if (scrollIndicator) {
       scrollIndicator.style.setProperty("--indicator", rect.bottom <= viewport * 1.02 ? "1" : "0");
     }
 
+    if (progress < 0.28) introSoftSnapDone = false;
+    if (progress >= 0.76) introSoftSnapDone = true;
+    window.clearTimeout(introSoftSnapTimer);
+    if (
+      scrollingDown &&
+      !introSoftSnapActive &&
+      !introSoftSnapDone &&
+      progress > 0.35 &&
+      progress < 0.68
+    ) {
+      introSoftSnapTimer = window.setTimeout(() => {
+        const freshRect = intro.getBoundingClientRect();
+        const travel = Math.max(freshRect.height - viewport, 1);
+        const freshProgress = clamp((-freshRect.top) / travel, 0, 1);
+        if (freshProgress < 0.35 || freshProgress > 0.7) return;
+
+        const targetY = window.scrollY + ((0.76 - freshProgress) * travel);
+        introSoftSnapActive = true;
+        introSoftSnapDone = true;
+        introSoftSnapTimer = 0;
+        introSoftSnapCancel = animateScrollTo(targetY, 1500, () => {
+          introSoftSnapActive = false;
+          introSoftSnapCancel = null;
+        });
+      }, 160);
+    }
+
     const miniGrid = intro.querySelector(".mini-grid");
     const artboard = intro.querySelector(".artboard");
     const gridProgress = slurpEase(progressBetween(progress, 0.06, 0.92));
+    if (captureTime) {
+      const totalFrames = Math.floor(gridProgress * 32 * 30);
+      const seconds = Math.floor(totalFrames / 30);
+      const minutes = Math.floor(seconds / 60);
+      const frames = totalFrames % 30;
+      captureTime.textContent = `00:${String(minutes).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}:${String(frames).padStart(2, "0")}`;
+    }
 
     intro.style.setProperty("--grid", gridProgress.toFixed(4));
     if (miniGrid) miniGrid.style.setProperty("--grid", gridProgress.toFixed(4));
@@ -337,7 +435,7 @@ const updateJourney = () => {
       const gridHeight = miniGrid.offsetHeight;
       const columnGap = parseFloat(gridStyles.columnGap) || 0;
       const rowGap = parseFloat(gridStyles.rowGap) || 0;
-      const inset = Math.max(8, Math.min(window.innerWidth * 0.0075, 14));
+      const inset = 0;
       const cellWidth = (gridWidth - columnGap * 2) / 3;
       const cellHeight = (gridHeight - rowGap * 2) / 3;
       const targetLeft = gridRect.left - artRect.left + cellWidth + columnGap;
@@ -355,27 +453,59 @@ const updateJourney = () => {
   if (dataTitle) {
     const rect = dataTitle.getBoundingClientRect();
     const progress = clamp((-rect.top) / Math.max(rect.height - viewport, 1), 0, 1);
-    dataTitle.style.setProperty("--data", easeOut(progress).toFixed(4));
+    const methodsWord = dataTitle.querySelector(".methods");
+    const maxTravel = methodsWord
+      ? parseFloat(getComputedStyle(methodsWord).getPropertyValue("--word-start-y")) || 38
+      : 38;
+    const wordProgress = progressBetween(progress, 0, 0.5);
+    const videoPeekProgress = easeOut(progressBetween(progress, 0.66, 0.9));
+    dataTitle.style.setProperty("--data", progress.toFixed(4));
+    dataTitle.style.setProperty("--data-travel", `${(wordProgress * maxTravel).toFixed(4)}svh`);
+    document.documentElement.style.setProperty("--data-video-peek", videoPeekProgress.toFixed(4));
+  }
+
+  if (methodSections.length) {
+    const firstMethodRect = methodSections[0].getBoundingClientRect();
+    const footerRect = siteFooter?.getBoundingClientRect();
+    const snapZoneStarted = firstMethodRect.top <= viewport * 0.25;
+    const snapZoneEnded = footerRect ? footerRect.bottom < viewport * 0.1 : false;
+    document.documentElement.classList.toggle("snap-methods", snapZoneStarted && !snapZoneEnded);
   }
 
   methodSections.forEach((section) => {
     const rect = section.getBoundingClientRect();
     const travel = Math.max(rect.height - viewport, 1);
     const progress = clamp((-rect.top) / travel, 0, 1);
+    const methodOneReveal = section.classList.contains("method-one")
+      ? easeOut(progressBetween(viewport - rect.top, viewport * 0.5, viewport))
+      : 1;
     const revealProgress = easeOut(progressBetween(viewport - rect.top, viewport * 0.34, viewport * 0.58));
     const methodProgress = easeOut(progressBetween(progress, 0.06, 0.82));
     const titleLockProgress = easeOut(progressBetween(methodProgress, 0, 0.72));
     const titleOverVideo = easeOut(progressBetween(methodProgress, 0.4, 0.66));
+    const simulatorExit = section.classList.contains("simulator")
+      ? easeOut(progressBetween(progress, 0, 1))
+      : 0;
+    if (section.classList.contains("simulator") && siteFooter) {
+      siteFooter.style.setProperty("--footer-reveal", simulatorExit.toFixed(4));
+    }
+    section.style.setProperty("--method-one-reveal", methodOneReveal.toFixed(4));
     section.style.setProperty("--method-reveal", revealProgress.toFixed(4));
     section.style.setProperty("--method", methodProgress.toFixed(4));
+    section.style.setProperty("--sim-exit", simulatorExit.toFixed(4));
     section.style.setProperty("--title-lock", titleLockProgress.toFixed(4));
     section.style.setProperty("--title-over", titleOverVideo.toFixed(4));
   });
+
+  lastScrollY = window.scrollY;
 };
 
 startVideoVisibilityControl();
 startWallVideoRotation();
 startMethodVideoRotation();
 updateJourney();
+window.addEventListener("wheel", cancelIntroSoftSnap, { passive: true });
+window.addEventListener("touchstart", cancelIntroSoftSnap, { passive: true });
+window.addEventListener("keydown", cancelIntroSoftSnapOnKey);
 window.addEventListener("scroll", updateJourney, { passive: true });
 window.addEventListener("resize", updateJourney);
