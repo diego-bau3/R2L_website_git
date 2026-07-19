@@ -65,9 +65,7 @@ const videoManifest = {
     "assets/videos/wall-videos/W25.mp4",
   ],
   landingpage: [
-    "assets/videos/landingpage/L1.mp4",
-    "assets/videos/landingpage/L2.mp4",
-    "assets/videos/landingpage/L3.mp4",
+    "assets/videos/landingpage/landing-main (2).mp4",
   ],
   egocentricData: [
     "assets/videos/egocentric-data/E1_Making a video.mp4",

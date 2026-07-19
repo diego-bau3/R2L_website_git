@@ -163,9 +163,9 @@ img {
   left: clamp(24px, 2.8vw, 54px);
   top: auto;
   bottom: clamp(26px, 3vw, 58px);
-  width: min(15vw, 290px);
-  min-width: 125px;
-  max-width: 290px;
+  width: min(17vw, 328px);
+  min-width: 163px;
+  max-width: 328px;
   height: auto;
   transform: none;
   opacity: calc(1 - (var(--grid) * 1.28));
@@ -759,9 +759,9 @@ img {
   .landing-panel > img {
     left: 18px;
     bottom: 18px;
-    width: 36vw;
-    min-width: 108px;
-    max-width: 150px;
+    width: 42vw;
+    min-width: 146px;
+    max-width: 188px;
   }
 
   .landing-social {
