@@ -68,34 +68,13 @@ const videoManifest = {
     "assets/videos/landingpage/landing-main (2).mp4",
   ],
   egocentricData: [
-    "assets/videos/egocentric-data/E1_Making a video.mp4",
-    "assets/videos/egocentric-data/E2_Doing the dishes.mp4",
-    "assets/videos/egocentric-data/E3_Doing the dishes.mp4",
-    "assets/videos/egocentric-data/E4_Doing the dishes.mp4",
-    "assets/videos/egocentric-data/E5_Doing the dishes.mp4",
-    "assets/videos/egocentric-data/E6_Doing the dishes.mp4",
-    "assets/videos/egocentric-data/E7_Opening a blender.mp4",
-    "assets/videos/egocentric-data/E8_Doing the dishes.mp4",
-    "assets/videos/egocentric-data/E9_Doing the dishes.mp4",
-    "assets/videos/egocentric-data/E10_Doing the dishes.mp4",
-    "assets/videos/egocentric-data/E11_Getting a snack.mp4",
-    "assets/videos/egocentric-data/E12_Eating.mp4",
-    "assets/videos/egocentric-data/E13_Cleaning up.mp4",
-    "assets/videos/egocentric-data/E14_Folding clothes.mp4",
-    "assets/videos/egocentric-data/E15_Tidying up.mp4",
-    "assets/videos/egocentric-data/E16_Making the bed.mp4",
+    "assets/videos/egocentric-data/Egocentric.mp4",
   ],
   leaderFollower: [
-    "assets/videos/leader-follower/A1_Putting the ball in the cup.mp4",
-    "assets/videos/leader-follower/A2_Playing beerpong.mp4",
-    "assets/videos/leader-follower/A3_Stacking the cups.mp4",
-    "assets/videos/leader-follower/A4_Teleoperating.mp4",
-    "assets/videos/leader-follower/A5_Teleoperating.mp4",
-    "assets/videos/leader-follower/A6_Putting the ball in the cup.mp4",
-    "assets/videos/leader-follower/A7_Teleoperating.mp4",
+    "assets/videos/leader-follower/LeaderFollower.mp4",
   ],
   remoteControl: [
-    "assets/videos/remote-control/R1_Remote controled robotarm.mp4",
+    "assets/videos/remote-control/RemoteControle.mp4",
   ],
   simulator: [
     "assets/videos/simulator/sally-recording-2026-06-27T08-22-06.mp4",
@@ -296,6 +275,7 @@ const startMethodVideoRotation = () => {
       if (video.dataset.rotationStarted === "true") return;
       video.dataset.rotationStarted = "true";
       rotate();
+      if (sources.length <= 1) return;
       window.setInterval(() => {
         if (video.dataset.inView !== "false" && video.readyState >= 1) rotate();
       }, methodDuration);
