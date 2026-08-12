@@ -38,7 +38,6 @@ const animateScrollTo = (targetY, duration = 1500, onComplete = () => {}) => {
 
 const videoManifest = {
   wall: [
-    "assets/videos/wall-videos/W1.mp4",
     "assets/videos/wall-videos/W2.mp4",
     "assets/videos/wall-videos/W3.mp4",
     "assets/videos/wall-videos/W4.mp4",
@@ -55,39 +54,13 @@ const videoManifest = {
     "assets/videos/wall-videos/W15.mp4",
     "assets/videos/wall-videos/W16.mp4",
     "assets/videos/wall-videos/W17.mp4",
-    "assets/videos/wall-videos/W18.mp4",
-    "assets/videos/wall-videos/W19.mp4",
-    "assets/videos/wall-videos/W20.mp4",
-    "assets/videos/wall-videos/W21.mp4",
-    "assets/videos/wall-videos/W22.mp4",
-    "assets/videos/wall-videos/W23.mp4",
-    "assets/videos/wall-videos/W24.mp4",
-    "assets/videos/wall-videos/W25.mp4",
   ],
   landingpage: [
     "assets/videos/landingpage/landing-main (2).mp4",
   ],
-  egocentricData: [
-    "assets/videos/egocentric-data/Egocentric.mp4",
-  ],
-  leaderFollower: [
-    "assets/videos/leader-follower/LeaderFollower.mp4",
-  ],
-  remoteControl: [
-    "assets/videos/remote-control/RemoteControle.mp4",
-  ],
-  simulator: [
-    "assets/videos/simulator/sally-recording-2026-06-27T08-22-06.mp4",
-    "assets/videos/simulator/sally-recording-2026-06-27T08-27-54.mp4",
-    "assets/videos/simulator/sally-recording-2026-06-27T08-31-09.mp4",
-  ],
 };
 
-const methodDuration = 6000;
-
 const videos = document.querySelectorAll("video");
-const methodSections = document.querySelectorAll(".method");
-const siteFooter = document.querySelector(".site-footer");
 const captureTime = document.querySelector(".capture-time");
 const isMobileViewport = () => window.matchMedia("(max-width: 760px)").matches;
 let introSoftSnapActive = false;
@@ -111,17 +84,6 @@ videos.forEach((video) => {
   });
 });
 
-const methodObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) entry.target.classList.add("is-visible");
-    });
-  },
-  { threshold: 0.34, rootMargin: "0px 0px -12% 0px" }
-);
-
-methodSections.forEach((section) => methodObserver.observe(section));
-
 const randomItem = (items) => items[Math.floor(Math.random() * items.length)];
 
 const shuffle = (items) => {
@@ -131,23 +93,6 @@ const shuffle = (items) => {
     [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
   }
   return shuffled;
-};
-
-const createPlaylist = (sources) => {
-  let queue = [];
-  let lastSource = "";
-
-  return () => {
-    if (!queue.length) {
-      queue = shuffle(sources);
-      if (queue.length > 1 && queue[0] === lastSource) {
-        [queue[0], queue[1]] = [queue[1], queue[0]];
-      }
-    }
-
-    lastSource = queue.shift();
-    return lastSource;
-  };
 };
 
 const setRandomStart = (video) => {
@@ -258,49 +203,6 @@ const startWallVideoRotation = () => {
   });
 };
 
-const startMethodVideoRotation = () => {
-  document.querySelectorAll("[data-video-playlist]").forEach((video) => {
-    const sources = videoManifest[video.dataset.videoPlaylist] || [];
-    if (!sources.length) return;
-
-    const nextSource = createPlaylist(sources);
-    const firstSource = video.dataset.src;
-    const rotate = () => {
-      const source =
-        firstSource && video.dataset.firstSourceLoaded !== "true" ? firstSource : nextSource();
-      video.dataset.firstSourceLoaded = "true";
-      swapVideo(video, source);
-    };
-    const start = () => {
-      if (video.dataset.rotationStarted === "true") return;
-      video.dataset.rotationStarted = "true";
-      rotate();
-      if (sources.length <= 1) return;
-      window.setInterval(() => {
-        if (video.dataset.inView !== "false" && video.readyState >= 1) rotate();
-      }, methodDuration);
-    };
-
-    if (video.closest(".landing-panel")) {
-      start();
-      return;
-    }
-
-    const section = video.closest(".method");
-    const lazyObserver = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
-          start();
-          lazyObserver.disconnect();
-        }
-      },
-      { rootMargin: "120% 0px", threshold: 0.01 }
-    );
-
-    lazyObserver.observe(section || video);
-  });
-};
-
 const startVideoVisibilityControl = () => {
   const playbackObserver = new IntersectionObserver(
     (entries) => {
@@ -346,7 +248,6 @@ const cancelIntroSoftSnapOnKey = (event) => {
 const updateJourney = () => {
   const viewport = window.innerHeight || 1;
   const intro = document.querySelector(".intro-sequence");
-  const dataTitle = document.querySelector(".data-title");
   const scrollIndicator = document.querySelector(".scroll-indicator");
 
   if (scrollIndicator) {
@@ -360,6 +261,7 @@ const updateJourney = () => {
     const progress = clamp((-rect.top) / Math.max(rect.height - viewport, 1), 0, 1);
     const scrollingDown = window.scrollY >= lastScrollY;
     intro.style.setProperty("--intro", progress.toFixed(4));
+
     if (scrollIndicator) {
       scrollIndicator.style.setProperty("--indicator", rect.bottom <= viewport * 1.02 ? "1" : "0");
     }
@@ -436,62 +338,11 @@ const updateJourney = () => {
     }
   }
 
-  if (dataTitle) {
-    const rect = dataTitle.getBoundingClientRect();
-    const progress = clamp((-rect.top) / Math.max(rect.height - viewport, 1), 0, 1);
-    const methodsWord = dataTitle.querySelector(".methods");
-    const maxTravel = methodsWord
-      ? parseFloat(getComputedStyle(methodsWord).getPropertyValue("--word-start-y")) || 38
-      : 38;
-    const wordProgress = progressBetween(progress, 0, 0.5);
-    const videoPeekProgress = easeOut(progressBetween(progress, 0.66, 0.9));
-    dataTitle.style.setProperty("--data", progress.toFixed(4));
-    dataTitle.style.setProperty("--data-travel", `${(wordProgress * maxTravel).toFixed(4)}svh`);
-    document.documentElement.style.setProperty("--data-video-peek", videoPeekProgress.toFixed(4));
-  }
-
-  if (methodSections.length) {
-    const firstMethodRect = methodSections[0].getBoundingClientRect();
-    const footerRect = siteFooter?.getBoundingClientRect();
-    const snapZoneStarted = firstMethodRect.top <= viewport * 0.25;
-    const snapZoneEnded = footerRect ? footerRect.bottom < viewport * 0.1 : false;
-    document.documentElement.classList.toggle(
-      "snap-methods",
-      !isMobileViewport() && snapZoneStarted && !snapZoneEnded
-    );
-  }
-
-  methodSections.forEach((section) => {
-    const rect = section.getBoundingClientRect();
-    const travel = Math.max(rect.height - viewport, 1);
-    const progress = clamp((-rect.top) / travel, 0, 1);
-    const methodOneReveal = section.classList.contains("method-one")
-      ? easeOut(progressBetween(viewport - rect.top, viewport * 0.5, viewport))
-      : 1;
-    const revealProgress = easeOut(progressBetween(viewport - rect.top, viewport * 0.34, viewport * 0.58));
-    const methodProgress = easeOut(progressBetween(progress, 0.06, 0.82));
-    const titleLockProgress = easeOut(progressBetween(methodProgress, 0, 0.72));
-    const titleOverVideo = easeOut(progressBetween(methodProgress, 0.4, 0.66));
-    const simulatorExit = section.classList.contains("simulator")
-      ? easeOut(progressBetween(progress, 0, 1))
-      : 0;
-    if (section.classList.contains("simulator") && siteFooter) {
-      siteFooter.style.setProperty("--footer-reveal", simulatorExit.toFixed(4));
-    }
-    section.style.setProperty("--method-one-reveal", methodOneReveal.toFixed(4));
-    section.style.setProperty("--method-reveal", revealProgress.toFixed(4));
-    section.style.setProperty("--method", methodProgress.toFixed(4));
-    section.style.setProperty("--sim-exit", simulatorExit.toFixed(4));
-    section.style.setProperty("--title-lock", titleLockProgress.toFixed(4));
-    section.style.setProperty("--title-over", titleOverVideo.toFixed(4));
-  });
-
   lastScrollY = window.scrollY;
 };
 
 startVideoVisibilityControl();
 startWallVideoRotation();
-startMethodVideoRotation();
 updateJourney();
 window.addEventListener("wheel", cancelIntroSoftSnap, { passive: true });
 window.addEventListener("touchstart", cancelIntroSoftSnap, { passive: true });
