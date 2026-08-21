@@ -3,8 +3,9 @@ const progressBetween = (value, start, end) => clamp((value - start) / (end - st
 const easeOut = (value) => 1 - Math.pow(1 - value, 3);
 const slurpEase = (value) => 1 - Math.pow(1 - value, 5);
 const lerp = (start, end, amount) => start + (end - start) * amount;
-const easeInOutCubic = (value) =>
-  value < 0.5 ? 4 * value * value * value : 1 - Math.pow(-2 * value + 2, 3) / 2;
+const transitionEase = (value) => {
+  return value * value * (3 - 2 * value);
+};
 
 const animateValue = (startValue, endValue, duration = 1900, onUpdate = () => {}, onComplete = () => {}) => {
   const distance = endValue - startValue;
@@ -15,7 +16,7 @@ const animateValue = (startValue, endValue, duration = 1900, onUpdate = () => {}
   const step = (time) => {
     if (isCancelled) return;
     const progress = clamp((time - startTime) / duration, 0, 1);
-    onUpdate(startValue + distance * easeInOutCubic(progress));
+    onUpdate(startValue + distance * transitionEase(progress));
 
     if (progress < 1) {
       frame = window.requestAnimationFrame(step);
@@ -167,13 +168,17 @@ const captureTime = document.querySelector(".capture-time");
 const captureOverlay = document.querySelector(".capture-overlay");
 const wallVideos = document.querySelectorAll(".mini-grid video");
 const isMobileViewport = () => window.matchMedia("(max-width: 760px)").matches;
+const maxDesktopPlayingWallVideos = 29;
 const maxMobilePlayingWallVideos = 18;
-const mobileWallPlaybackIndexes = new Set(
-  Array.from({ length: maxMobilePlayingWallVideos }, (_, index) => {
+
+const playbackIndexesForLimit = (limit) =>
+  new Set(Array.from({ length: limit }, (_, index) => {
     const lastIndex = Math.max(playableWallSlots.length - 1, 0);
-    return Math.round((index * lastIndex) / Math.max(maxMobilePlayingWallVideos - 1, 1));
-  }),
-);
+    return Math.round((index * lastIndex) / Math.max(limit - 1, 1));
+  }));
+
+const desktopWallPlaybackIndexes = playbackIndexesForLimit(maxDesktopPlayingWallVideos);
+const mobileWallPlaybackIndexes = playbackIndexesForLimit(maxMobilePlayingWallVideos);
 let wallVideosHydrated = false;
 let wallPlaybackEnabled = false;
 let sceneProgress = 0;
@@ -191,11 +196,13 @@ const randomItem = (items) => items[Math.floor(Math.random() * items.length)];
 const isWallVideo = (video) => video.closest(".mini-grid") !== null;
 
 const canPlayWallVideo = (video) => {
-  if (!isMobileViewport()) return true;
-
   const slot = video.closest(".video-slot");
   const slotIndex = playableWallSlots.indexOf(slot);
-  return mobileWallPlaybackIndexes.has(slotIndex);
+  if (slotIndex < 0) return false;
+
+  return isMobileViewport()
+    ? mobileWallPlaybackIndexes.has(slotIndex)
+    : desktopWallPlaybackIndexes.has(slotIndex);
 };
 
 const formatElapsedTimestamp = (elapsedMs) => {
@@ -378,6 +385,7 @@ const setBufferedSource = (video, source) => {
   const posterSource = posterForSource(source);
   if (posterSource) video.poster = posterSource;
   else video.removeAttribute("poster");
+  video.preload = "metadata";
   video.src = source;
   video.load();
   video.pause();
@@ -403,7 +411,6 @@ const hydrateVideo = (video) => {
 };
 
 const hydrateWallVideos = () => {
-  if (wallVideosHydrated) return;
   wallVideosHydrated = true;
 
   playableWallSlots.forEach((slot) => {
@@ -416,26 +423,29 @@ const hydrateWallVideos = () => {
   });
 };
 
-const setWallPlayback = (enabled) => {
-  if (enabled === wallPlaybackEnabled) return;
-  wallPlaybackEnabled = enabled;
-
-  if (enabled) {
-    hydrateWallVideos();
-  }
-
+const syncWallPlayback = () => {
   wallVideos.forEach((video) => {
     if (video.classList.contains("is-buffering")) {
       video.pause();
       return;
     }
 
-    if (enabled && canPlayWallVideo(video) && video.dataset.inView !== "false" && video.getAttribute("src")) {
+    if (wallPlaybackEnabled && canPlayWallVideo(video) && video.dataset.inView !== "false" && video.getAttribute("src")) {
       video.play().catch(() => {});
     } else {
       video.pause();
     }
   });
+};
+
+const setWallPlayback = (enabled) => {
+  wallPlaybackEnabled = enabled;
+
+  if (enabled) {
+    hydrateWallVideos();
+  }
+
+  syncWallPlayback();
 };
 
 const startWallVideoRotation = () => {
@@ -504,7 +514,7 @@ const startWallVideoRotation = () => {
       buffer.loop = false;
       buffer.muted = true;
       buffer.playsInline = true;
-      buffer.preload = "auto";
+      buffer.preload = "metadata";
       setBufferedSource(buffer, pickNextSource());
     };
     const activateBuffer = () => {
@@ -610,10 +620,10 @@ const renderJourney = (progress = sceneProgress) => {
       const columnGap = parseFloat(gridStyles.columnGap) || 0;
       const rowGap = parseFloat(gridStyles.rowGap) || 0;
       const inset = 0;
-      const gridColumns = isMobile ? 3 : 7;
-      const gridRows = isMobile ? 14 : 6;
+      const gridColumns = isMobile ? 3 : 6;
+      const gridRows = isMobile ? 10 : 5;
       const landingColumn = isMobile ? 2 : 4;
-      const landingRow = isMobile ? 7 : 3;
+      const landingRow = isMobile ? 5 : 3;
       const cellWidth = (gridWidth - columnGap * (gridColumns - 1)) / gridColumns;
       const cellHeight = (gridHeight - rowGap * (gridRows - 1)) / gridRows;
       const targetLeft = gridRect.left - artRect.left + (cellWidth + columnGap) * (landingColumn - 1);
@@ -624,6 +634,7 @@ const renderJourney = (progress = sceneProgress) => {
       intro.style.setProperty("--landing-top", `${lerp(inset, targetTop, settle).toFixed(2)}px`);
       intro.style.setProperty("--landing-width", `${lerp(artWidth - inset * 2, cellWidth, settle).toFixed(2)}px`);
       intro.style.setProperty("--landing-height", `${lerp(artHeight - inset * 2, cellHeight, settle).toFixed(2)}px`);
+      intro.style.setProperty("--landing-radius", "0px");
       intro.querySelector(".landing-panel")?.classList.toggle("is-docked", settle > 0.92);
     }
   }
@@ -649,7 +660,7 @@ const startSceneTransition = (targetProgress) => {
   sceneTransitionCancel = animateValue(
     sceneProgress,
     sceneTarget,
-    2100,
+    2800,
     setSceneProgress,
     (completed) => {
       if (completed) setSceneProgress(sceneTarget);

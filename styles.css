@@ -7,6 +7,7 @@
   --muted: #7d766d;
   --line: rgba(20, 19, 17, 0.13);
   --accent: #e86f43;
+  --wall-bg: #fffdfa;
   --font: "Inter Tight", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --max: min(100vw, 1920px);
   --u: calc(var(--max) / 5833);
@@ -97,9 +98,10 @@ img {
   --landing-top: 0px;
   --landing-width: 100%;
   --landing-height: 100svh;
+  --landing-radius: 0px;
   height: 100svh;
   overflow: hidden;
-  background: var(--charcoal);
+  background: var(--wall-bg);
 }
 
 .intro-sticky {
@@ -108,7 +110,7 @@ img {
   display: grid;
   place-items: center;
   overflow: hidden;
-  background: var(--charcoal);
+  background: var(--wall-bg);
 }
 
 .artboard {
@@ -116,7 +118,7 @@ img {
   width: var(--max);
   height: 100svh;
   overflow: hidden;
-  background: var(--charcoal);
+  background: var(--wall-bg);
 }
 
 .landing-panel {
@@ -126,7 +128,7 @@ img {
   width: var(--landing-width);
   height: var(--landing-height);
   overflow: hidden;
-  border-radius: 0;
+  border-radius: var(--landing-radius);
   background: var(--video-black);
   will-change: left, top, width, height;
   z-index: 3;
@@ -188,15 +190,15 @@ img {
 .mini-grid {
   --grid-column-gap: 0%;
   --grid-row-gap: 0%;
-  --wall-aspect: 2.0741;
+  --wall-aspect: 2.1333;
   position: absolute;
   left: 50%;
   top: 50%;
   width: max(100vw, calc(100svh * var(--wall-aspect)));
   height: max(100svh, calc(100vw / var(--wall-aspect)));
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: repeat(6, 1fr);
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(5, 1fr);
   column-gap: var(--grid-column-gap);
   row-gap: var(--grid-row-gap);
   opacity: var(--grid);
@@ -210,8 +212,9 @@ img {
   grid-column: var(--col);
   grid-row: var(--row);
   position: relative;
-  width: 100%;
-  height: 100%;
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  margin: -1px;
   min-width: 0;
   min-height: 0;
   overflow: hidden;
@@ -425,10 +428,6 @@ img {
   visibility: hidden;
 }
 
-.landing-panel.is-docked {
-  border-radius: 0;
-}
-
 @media (min-width: 1100px) {
   .artboard {
     height: 100svh;
@@ -458,10 +457,6 @@ img {
     height: 100dvh;
   }
 
-  .landing-panel {
-    border-radius: 0;
-  }
-
   .landing-panel > img {
     left: 18px;
     bottom: 18px;
@@ -483,7 +478,7 @@ img {
     width: calc(100vw - 20px);
     height: calc(100dvh - 84px);
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(14, 1fr);
+    grid-template-rows: repeat(10, 1fr);
     grid-auto-flow: row;
     grid-auto-rows: 1fr;
   }
